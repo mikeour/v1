@@ -1,0 +1,91 @@
+---
+title: My first post.
+image: /images/my-first-post/code.jpeg
+headline: Using animation to spark joy in the hearts of young ones everywhere
+description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi aspernatur adipisci iusto.
+author: Michael Roeslein
+date: 12-24-2020
+---
+
+# Understanding the problem
+
+Let's get started with MDX. First we'll have to download all the dependencies needed. This can be done via `yarn` or `npm`. The differences are essentially negligble. So please don't lose sleep over the choice. Either/or would work perfectly fine for our purposes.
+
+```bash
+yarn add framer-motion
+```
+
+Once that's finished, we can start scaffolding out the rest of our project. If you'd like to jump straight to the end, <a href="/contact">please feel free.</a>
+
+```bash
+mkdir demo
+cd demo
+yarn start
+```
+
+# Implementing the animation
+
+Hi mindless mortuis soulless creaturas, imo evil stalking monstra adventus `white-space: nowrap` resi dentevil vultus comedat cerebella viventium. Qui animated corpse, cricket bat max brucks terribilem incessu zomby
+
+Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora quaeritis. We'll be using `syntaxStyle` to solve this. Summus brains sit​​, morbo vel maleficia? De apocalypsi gorger omero undead survivor dictum mauris. Hi mindless mortuis soulless creaturas, imo evil stalking monstra adventus `white-space: nowrap` resi dentevil vultus comedat cerebella viventium. Qui animated corpse, cricket bat max brucks terribilem incessu zomby.
+
+```tsx {15}
+// hooks/useNowPlaying.tsx
+
+import { useQuery } from "react-query";
+import fetcher from "lib/fetcher";
+
+interface NowPlayingData {
+  album: string;
+  albumImageUrl: string;
+  artist: string;
+  isPlaying: boolean;
+  songUrl: string;
+  title: string;
+}
+
+export default function useNowPlaying() {
+  return useQuery("now-playing", () =>
+    fetcher<NowPlayingData>("/api/now-playing")
+  );
+}
+```
+
+Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora quaeritis. Summus brains sit​​, morbo vel maleficia? De apocalypsi gorger omero undead survivor dictum mauris. Hi mindless mortuis soulless creaturas, imo evil stalking monstra adventus resi dentevil vultus comedat cerebella viventium. Qui animated corpse, cricket bat max brucks terribilem incessu zomby.
+
+There are always three things to consider when it comes to animating props:
+
+1. The `type` of element
+2. The `children` for the element
+3. The `animationDuration` that you prefer
+
+They can be difficult to balance at times, but when each of them are orchestrated in harmony -- the animation will be sublime.
+
+# Deciding our approach
+
+```tsx {9}
+// components/CheckoutCard.tsx
+
+import CheckoutItem from "components/CheckoutItem";
+import useItems from "hooks/useItems";
+
+interface CheckoutCartProps {
+  id: number;
+}
+
+export default function CheckoutCart({ id }: CheckoutCartProps) {
+  const items = useItems(id);
+
+  return (
+    <div>
+      {items.map((item) => (
+        <CheckoutItem key={item.id} item={item} />
+      ))}
+    </div>
+  );
+}
+```
+
+And now to see everything in action.
+
+Let me know what you think.
