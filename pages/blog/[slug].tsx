@@ -30,7 +30,7 @@ export default function Blogpost({ blogpost, slug }: any) {
   return (
     <>
       <Head>
-        <title>{frontmatter.title}</title>
+        <title key="title">{frontmatter.title}</title>
       </Head>
       <BlogLayout>
         <Header frontmatter={frontmatter} />

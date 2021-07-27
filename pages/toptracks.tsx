@@ -26,7 +26,7 @@ function TopTracksPage() {
   return (
     <>
       <Head>
-        <title>Top Tracks</title>
+        <title key="title">Top Tracks</title>
       </Head>
       <Stack
         type="column"

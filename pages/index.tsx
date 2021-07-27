@@ -11,7 +11,7 @@ export default function Home({ blogposts }: HomeProps) {
   return (
     <>
       <Head>
-        <title>mikeour.io</title>
+        <title key="title">mikeour.io</title>
       </Head>
       <Introduction blogposts={blogposts} />
     </>

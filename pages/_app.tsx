@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Head from "next/head";
 import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Hydrate } from "react-query/hydration";
@@ -73,23 +74,29 @@ function MyApp({ Component, pageProps }: AppProps) {
   globalStyles();
 
   return (
-    <ThemeProvider
-      attribute="class"
-      value={{ light: "light-theme", dark: darkTheme.toString() }}
-      defaultTheme="light"
-      enableColorScheme={false}
-      enableSystem={false}
-    >
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <SiteLayout>
-            <Component {...pageProps} />
-          </SiteLayout>
-        </Hydrate>
+    <>
+      <Head>
+        <title key="title">mikeour.io</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      <ThemeProvider
+        attribute="class"
+        value={{ light: "light-theme", dark: darkTheme.toString() }}
+        defaultTheme="light"
+        enableColorScheme={false}
+        enableSystem={false}
+      >
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <SiteLayout>
+              <Component {...pageProps} />
+            </SiteLayout>
+          </Hydrate>
 
-        {/* <ReactQueryDevtools /> */}
-      </QueryClientProvider>
-    </ThemeProvider>
+          {/* <ReactQueryDevtools /> */}
+        </QueryClientProvider>
+      </ThemeProvider>
+    </>
   );
 }
 

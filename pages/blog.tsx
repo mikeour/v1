@@ -14,7 +14,7 @@ export default function Blog({ blogposts }: BlogProps) {
   return (
     <>
       <Head>
-        <title>Blog</title>
+        <title key="title">Blog</title>
       </Head>
       <Stack type="column" gap={1} css={{ py: "$2" }}>
         <Stack type="column" gap={1} css={{ py: "$4" }}>
