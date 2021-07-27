@@ -1,6 +1,5 @@
 import { styled } from "styles";
 import { Stack, AlbumArt } from "components/shared";
-import { Variants } from "framer-motion";
 
 interface Track {
   artist: string;
@@ -9,14 +8,9 @@ interface Track {
   title: string;
 }
 
-const item: Variants = {
-  hidden: { opacity: 0, x: -8, y: -4, scale: 1 },
-  show: { opacity: 1, x: 0, y: 0, scale: 1 },
-};
-
 function TopTrack({ track, position }: { track: Track; position: number }) {
   return (
-    <Stack type="row" gap={1} variants={item}>
+    <Stack type="row" gap={1}>
       <AlbumArt>
         <img src={track.album} alt="album" />
       </AlbumArt>
@@ -36,8 +30,8 @@ function TopTrack({ track, position }: { track: Track; position: number }) {
 export default TopTrack;
 
 const TrackName = styled("a", {
-  fontSize: "0.9rem",
-  color: "var(--colors-accent)",
+  fontSize: "$2",
+  color: "$indigo8",
   letterSpacing: "0.25px",
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -48,8 +42,8 @@ const TrackName = styled("a", {
 });
 
 const ArtistName = styled("div", {
-  fontSize: "0.75rem",
-  color: "var(--colors-secondary)",
+  fontSize: "$1",
+  color: "$indigo7",
   letterSpacing: "0.25px",
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -57,8 +51,8 @@ const ArtistName = styled("div", {
 });
 
 const OrderAmount = styled("span", {
-  background: "var(--colors-accent)",
-  color: "white",
+  background: "$indigo8",
+  color: "$indigo12",
   borderRadius: "30%",
   position: "absolute",
   fontSize: "0.8rem",
@@ -66,8 +60,7 @@ const OrderAmount = styled("span", {
   top: "50%",
   left: "0",
   transform: "translate(-75%, -50%)",
-  width: "22px",
-  height: "22px",
+  size: "22px",
   display: "inline-flex",
   justifyContent: "center",
   alignItems: "center",

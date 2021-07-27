@@ -16,7 +16,7 @@ export default {
     hyphens: "none",
   },
   'pre[class*="language-"]': {
-    color: "white",
+    color: "red",
     textAlign: "left",
     whiteSpace: "pre",
     wordSpacing: "normal",
@@ -75,7 +75,7 @@ export default {
     whiteSpace: "normal",
   },
   changed: {
-    color: "#A2BFFC",
+    color: "red",
   },
   deleted: {
     color: "#EF535090",
@@ -84,69 +84,73 @@ export default {
     color: "#ADDB67",
   },
   comment: {
-    color: "#596378",
-    // fontStyle: "italic",
+    color: "#6F7887",
   },
   string: {
-    color: "#C792EA",
+    color: "#D6C294",
   },
   operator: {
-    color: "#C792EA",
+    color: "#61AFEF",
   },
   selector: {
-    color: "#C792EA",
+    color: "#D6C294",
   },
   doctype: {
-    color: "#C792EA",
+    color: "#61AFEF",
   },
   url: {
-    color: "#C792EA",
+    color: "#D6C294",
   },
   variable: {
-    color: "#ECC48D",
+    color: "#9AC181",
+  },
+  parameter: {
+    color: "#9AC181",
   },
   number: {
-    color: "#F78C6C",
+    color: "#D19A66",
   },
   builtin: {
-    color: "#CED2D6",
+    color: "#CA90D0",
   },
   punctuation: {
-    color: "#C792EA",
-    // fontStyle: "italic",
+    color: "#61AFEF",
+  },
+  "property-access": {
+    color: "#7B86AE",
   },
   "attr-name": {
-    color: "#C792EA",
-    // fontStyle: "italic",
+    color: "#CA90D0",
   },
   char: {
-    color: "#FFA7C4",
+    color: "#9CC284",
   },
   constant: {
-    color: "#FFA7C4",
+    color: "#56B6C2",
   },
   tag: {
-    color: "#FFA7C4",
+    color: "#61AFEF",
   },
   "class-name": {
-    color: "#FFCB8B",
+    color: "#56B6C2",
   },
   function: {
-    color: "#8EACE3",
+    color: "#CA90D0",
   },
   boolean: {
-    color: "#F87086",
+    color: "#5492C5",
   },
   property: {
-    color: "#80CBC4",
+    color: "#93A1D2",
   },
+  // let, const, while, await, if, else, return, etc
   keyword: {
-    color: "#FFA7C4",
-    // fontStyle: "italic",
+    color: "#61AFEF",
   },
   namespace: {
-    color: "#B2CCD6",
+    color: "#9CC284",
   },
+
   important: {
     fontWeight: "bold",
   },
@@ -154,6 +158,6 @@ export default {
     fontWeight: "bold",
   },
   italic: {
-    // fontStyle: "italic",
+    fontStyle: "italic",
   },
 };

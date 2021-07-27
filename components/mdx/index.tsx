@@ -1,7 +1,19 @@
 import Link from "next/link";
 import Image from "next/image";
 import CodeBlock from "./CodeBlock";
-import Button from "components/Button";
+import { slugify } from "utils";
+
+function HeaderOne({ children }: { children: string }) {
+  const id = slugify(children);
+
+  return <h1 id={id}>{children}</h1>;
+}
+
+function HeaderTwo({ children }: { children: string }) {
+  const id = slugify(children);
+
+  return <h2 id={id}>{children}</h2>;
+}
 
 function CustomLink(props: any) {
   const href = props.href;
@@ -19,16 +31,8 @@ function CustomLink(props: any) {
 }
 
 export default {
-  h1: ({ children }: { children: string }) => {
-    const link = children.toLowerCase().replace(/ /g, "-");
-
-    return <h1 id={link}>{children}</h1>;
-  },
-  h2: ({ children }: { children: string }) => {
-    const link = children.toLowerCase().replace(/ /g, "-");
-
-    return <h2 id={link}>{children}</h2>;
-  },
+  h1: HeaderOne,
+  h2: HeaderTwo,
   code: CodeBlock,
   a: CustomLink,
   Image,

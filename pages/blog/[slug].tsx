@@ -1,27 +1,15 @@
-import BlogLayout from "components/BlogLayout";
 import Image from "next/image";
 import Head from "next/head";
-import { getBlogpostBySlug, getAllBlogposts } from "lib/blogposts";
+import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote";
+import BlogLayout from "components/BlogLayout";
 import Header from "components/Header";
 import components from "components/mdx";
 import { Stack } from "components/shared";
+import { getBlogpostBySlug, getAllBlogposts } from "lib/blogposts";
 import { styled } from "styles";
-import Link from "next/link";
-import { motion, useTransform, useViewportScroll } from "framer-motion";
-
-function getHeadings(source: string) {
-  const headingLines = source.split("\n").filter((line) => {
-    return line.match(/^##*\s/);
-  });
-
-  return headingLines.map((raw) => {
-    const text = raw.replace(/^##*\s/, "");
-    const level = raw.slice(0, 2) === "##" ? 2 : 1;
-
-    return { text, level };
-  });
-}
+import { getHeadings, slugify } from "utils";
+import blogpostStyles from "styles/blogpost";
 
 export default function Blogpost({ blogpost, slug }: any) {
   const { mdxSource, frontmatter, links, content } = blogpost;
@@ -34,23 +22,9 @@ export default function Blogpost({ blogpost, slug }: any) {
       </Head>
       <BlogLayout>
         <Header frontmatter={frontmatter} />
-        <ContentContainer
-          css={{
-            "@initial": { gtc: "auto minmax(0, 1fr)" },
-            "@bp1": { gtc: "minmax(0, 1fr)" },
-          }}
-        >
+        <ContentContainer>
           <ContentSidebar>
-            <Stack
-              type="row"
-              gap={2}
-              css={{
-                pb: "$4",
-                justifyContent: "flex-start",
-                "@initial": { justifyContent: "flex-start" },
-                "@bp1": { justifyContent: "center" },
-              }}
-            >
+            <AuthorContainer type="row" gap={2}>
               <AvatarContainer>
                 <Avatar
                   src="/images/self.jpg"
@@ -63,14 +37,8 @@ export default function Blogpost({ blogpost, slug }: any) {
                 <AuthorName>{frontmatter.author}</AuthorName>
                 <AuthorTag>Author</AuthorTag>
               </Stack>
-            </Stack>
-            <StickyContent
-              css={{
-                justifyContent: "flex-start",
-                "@initial": { justifyContent: "flex-start" },
-                "@bp1": { justifyContent: "center" },
-              }}
-            >
+            </AuthorContainer>
+            <StickyContent>
               <Stack
                 type="column"
                 gap={0}
@@ -80,10 +48,9 @@ export default function Blogpost({ blogpost, slug }: any) {
               >
                 <TableOfContentsHeader>Table of Contents</TableOfContentsHeader>
                 {headings.map((heading) => {
-                  const link = heading.text.toLowerCase().replace(/ /g, "-");
                   return (
                     <TableOfContentsLink key={heading.text}>
-                      <a href={`#${link}`}>{heading.text} </a>
+                      <a href={`#${heading.link}`}>{heading.text} </a>
                     </TableOfContentsLink>
                   );
                 })}
@@ -100,38 +67,13 @@ export default function Blogpost({ blogpost, slug }: any) {
               </Stack>
             </StickyContent>
           </ContentSidebar>
-          <Content>
+          <Content className={blogpostStyles()}>
             <MDXRemote {...mdxSource} components={components} />
           </Content>
         </ContentContainer>
 
-        <Stack
-          type="row"
-          gap={1}
-          css={{
-            gtc: "1fr 1fr",
-            mt: "$5",
-            pt: "2rem",
-            borderTop: "1px solid $gray10",
-            "@initial": {
-              gtc: "1fr 1fr",
-            },
-            "@bp1": {
-              gtc: "1fr",
-            },
-          }}
-        >
-          <Stack
-            type="column"
-            gap={1}
-            css={{
-              span: {
-                color: "$indigo11",
-                cursor: "pointer",
-                "&:hover": { color: "$indigo12" },
-              },
-            }}
-          >
+        <ExtraLinksContainer type="row" gap={1}>
+          <ExtraLink type="column" gap={1}>
             {links.prev !== null && (
               <>
                 <p>Previous</p>
@@ -142,20 +84,9 @@ export default function Blogpost({ blogpost, slug }: any) {
                 </Link>
               </>
             )}
-          </Stack>
+          </ExtraLink>
 
-          <Stack
-            type="column"
-            gap={1}
-            css={{
-              textAlign: "right",
-              span: {
-                color: "$indigo11",
-                cursor: "pointer",
-                "&:hover": { color: "$indigo12" },
-              },
-            }}
-          >
+          <ExtraLink type="column" gap={1} alignRight>
             {links.next !== null && (
               <>
                 <p>Next</p>
@@ -166,8 +97,8 @@ export default function Blogpost({ blogpost, slug }: any) {
                 </Link>
               </>
             )}
-          </Stack>
-        </Stack>
+          </ExtraLink>
+        </ExtraLinksContainer>
       </BlogLayout>
     </>
   );
@@ -201,6 +132,8 @@ const ContentContainer = styled("div", {
   gtc: "auto minmax(0, 1fr)",
   gridGap: "2rem",
   position: "relative",
+  "@initial": { gtc: "auto minmax(0, 1fr)" },
+  "@bp1": { gtc: "minmax(0, 1fr)" },
 });
 
 const Content = styled("div", {
@@ -209,33 +142,6 @@ const Content = styled("div", {
   gridGap: "1.5rem",
   minWidth: "0",
   py: "2rem",
-
-  "*": {
-    minWidth: "0",
-  },
-
-  "p, ol, li": {
-    // width: "90%",
-    // margin: "0 auto",
-  },
-
-  li: {
-    listStyle: "inside",
-  },
-
-  "code:not([class])": {
-    textAlign: "left",
-    whiteSpace: "pre",
-    wordSpacing: "normal",
-    wordBreak: "normal",
-    overflowWrap: "normal",
-    padding: "0.2rem 0.4rem",
-    fontSize: "$1",
-    letterSpacing: "0.15px",
-    background: "$indigo10",
-    color: "#fff",
-    br: "4px",
-  },
 });
 
 const ContentSidebar = styled("aside", {
@@ -249,6 +155,9 @@ const StickyContent = styled("div", {
   display: "grid",
   alignContent: "flex-start",
   gridGap: "$2",
+  justifyContent: "flex-start",
+  "@initial": { justifyContent: "flex-start" },
+  "@bp1": { justifyContent: "center" },
 });
 
 const AuthorName = styled("p", {
@@ -276,20 +185,6 @@ const Avatar = styled(Image, {
   m: "0",
 });
 
-const ProgressContainer = styled("div", {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  width: "100%",
-  height: "0.25rem",
-  zIndex: 1,
-});
-
-const ProgressBar = styled(motion.div, {
-  size: "100%",
-  bg: "$indigo8",
-});
-
 const TableOfContentsHeader = styled("p", {
   color: "$slate12",
   fontWeight: "bold",
@@ -303,4 +198,45 @@ const TableOfContentsLink = styled("p", {
     textDecoration: "none",
     color: "inherit",
   },
+});
+
+const ExtraLinksContainer = styled(Stack, {
+  gtc: "1fr 1fr",
+  mt: "$5",
+  pt: "2rem",
+  borderTop: "1px solid $gray10",
+  "@initial": {
+    gtc: "1fr 1fr",
+  },
+  "@bp1": {
+    gtc: "1fr",
+  },
+});
+
+const ExtraLink = styled(Stack, {
+  span: {
+    color: "$indigo11",
+    cursor: "pointer",
+    "&:hover": { color: "$indigo12" },
+  },
+
+  variants: {
+    alignLeft: {
+      true: {
+        textAlign: "left",
+      },
+    },
+    alignRight: {
+      true: {
+        textAlign: "right",
+      },
+    },
+  },
+});
+
+const AuthorContainer = styled(Stack, {
+  pb: "$4",
+  justifyContent: "flex-start",
+  "@initial": { justifyContent: "flex-start" },
+  "@bp1": { justifyContent: "center" },
 });

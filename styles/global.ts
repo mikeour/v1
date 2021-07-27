@@ -32,7 +32,7 @@ export default global({
 
   "a, a:visited": {
     color: "$indigo10",
-    textDecorationColor: "$indigo10",
+    textDecorationColor: "inherit",
     textDecorationThickness: ".075em",
     textUnderlineOffset: ".09em",
     transition: "all 300ms ease",

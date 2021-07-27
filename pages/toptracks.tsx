@@ -5,17 +5,6 @@ import { styled } from "styles";
 import TopTrack from "components/TopTrack";
 import LoadingSongs from "components/TopTracksLoadingSpinner";
 import { Stack } from "components/shared";
-import { Variants } from "framer-motion";
-
-const container: Variants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.075,
-    },
-  },
-};
 
 const defaultRange = "short_term";
 
@@ -88,9 +77,6 @@ function TopTracksPage() {
             padding: "0 2rem",
             margin: "0 auto",
           }}
-          variants={container}
-          initial="hidden"
-          animate="show"
         >
           {data ? (
             data.tracks.map((track, index) => (
