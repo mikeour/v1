@@ -1,5 +1,6 @@
 import BlogLayout from "components/BlogLayout";
 import Image from "next/image";
+import Head from "next/head";
 import { getBlogpostBySlug, getAllBlogposts } from "lib/blogposts";
 import { MDXRemote } from "next-mdx-remote";
 import Header from "components/Header";
@@ -27,143 +28,148 @@ export default function Blogpost({ blogpost, slug }: any) {
   const headings = getHeadings(content);
 
   return (
-    <BlogLayout>
-      <Header frontmatter={frontmatter} />
-      <ContentContainer
-        css={{
-          "@initial": { gtc: "auto minmax(0, 1fr)" },
-          "@bp1": { gtc: "minmax(0, 1fr)" },
-        }}
-      >
-        <ContentSidebar>
-          <Stack
-            type="row"
-            gap={2}
-            css={{
-              pb: "$4",
-              justifyContent: "flex-start",
-              "@initial": { justifyContent: "flex-start" },
-              "@bp1": { justifyContent: "center" },
-            }}
-          >
-            <AvatarContainer>
-              <Avatar
-                src="/images/self.jpg"
-                alt="Picture of the author"
-                width={44}
-                height={44}
-              />
-            </AvatarContainer>
-            <Stack type="column" gap={0}>
-              <AuthorName>{frontmatter.author}</AuthorName>
-              <AuthorTag>Author</AuthorTag>
-            </Stack>
-          </Stack>
-          <StickyContent
-            css={{
-              justifyContent: "flex-start",
-              "@initial": { justifyContent: "flex-start" },
-              "@bp1": { justifyContent: "center" },
-            }}
-          >
+    <>
+      <Head>
+        <title>{frontmatter.title}</title>
+      </Head>
+      <BlogLayout>
+        <Header frontmatter={frontmatter} />
+        <ContentContainer
+          css={{
+            "@initial": { gtc: "auto minmax(0, 1fr)" },
+            "@bp1": { gtc: "minmax(0, 1fr)" },
+          }}
+        >
+          <ContentSidebar>
             <Stack
-              type="column"
-              gap={0}
+              type="row"
+              gap={2}
               css={{
-                gap: "0.25rem",
+                pb: "$4",
+                justifyContent: "flex-start",
+                "@initial": { justifyContent: "flex-start" },
+                "@bp1": { justifyContent: "center" },
               }}
             >
-              <TableOfContentsHeader>Table of Contents</TableOfContentsHeader>
-              {headings.map((heading) => {
-                const link = heading.text.toLowerCase().replace(/ /g, "-");
-                return (
-                  <TableOfContentsLink key={heading.text}>
-                    <a href={`#${link}`}>{heading.text} </a>
-                  </TableOfContentsLink>
-                );
-              })}
+              <AvatarContainer>
+                <Avatar
+                  src="/images/self.jpg"
+                  alt="Picture of the author"
+                  width={44}
+                  height={44}
+                />
+              </AvatarContainer>
+              <Stack type="column" gap={0}>
+                <AuthorName>{frontmatter.author}</AuthorName>
+                <AuthorTag>Author</AuthorTag>
+              </Stack>
             </Stack>
-            <Stack
-              type="column"
-              gap={0}
+            <StickyContent
               css={{
-                gap: "0.25rem",
+                justifyContent: "flex-start",
+                "@initial": { justifyContent: "flex-start" },
+                "@bp1": { justifyContent: "center" },
               }}
             >
-              <TableOfContentsHeader>Tags</TableOfContentsHeader>
-              <p>React</p>
-            </Stack>
-          </StickyContent>
-        </ContentSidebar>
-        <Content>
-          <MDXRemote {...mdxSource} components={components} />
-        </Content>
-      </ContentContainer>
+              <Stack
+                type="column"
+                gap={0}
+                css={{
+                  gap: "0.25rem",
+                }}
+              >
+                <TableOfContentsHeader>Table of Contents</TableOfContentsHeader>
+                {headings.map((heading) => {
+                  const link = heading.text.toLowerCase().replace(/ /g, "-");
+                  return (
+                    <TableOfContentsLink key={heading.text}>
+                      <a href={`#${link}`}>{heading.text} </a>
+                    </TableOfContentsLink>
+                  );
+                })}
+              </Stack>
+              <Stack
+                type="column"
+                gap={0}
+                css={{
+                  gap: "0.25rem",
+                }}
+              >
+                <TableOfContentsHeader>Tags</TableOfContentsHeader>
+                <p>React</p>
+              </Stack>
+            </StickyContent>
+          </ContentSidebar>
+          <Content>
+            <MDXRemote {...mdxSource} components={components} />
+          </Content>
+        </ContentContainer>
 
-      <Stack
-        type="row"
-        gap={1}
-        css={{
-          gtc: "1fr 1fr",
-          mt: "$5",
-          pt: "2rem",
-          borderTop: "1px solid $gray10",
-          "@initial": {
+        <Stack
+          type="row"
+          gap={1}
+          css={{
             gtc: "1fr 1fr",
-          },
-          "@bp1": {
-            gtc: "1fr",
-          },
-        }}
-      >
-        <Stack
-          type="column"
-          gap={1}
-          css={{
-            span: {
-              color: "$indigo11",
-              cursor: "pointer",
-              "&:hover": { color: "$indigo12" },
+            mt: "$5",
+            pt: "2rem",
+            borderTop: "1px solid $gray10",
+            "@initial": {
+              gtc: "1fr 1fr",
+            },
+            "@bp1": {
+              gtc: "1fr",
             },
           }}
         >
-          {links.prev !== null && (
-            <>
-              <p>Previous</p>
-              <h2>{links.prev.headline}</h2>
-              <p>{links.prev.description}</p>
-              <Link href={`/blog/${links.prev.slug}`}>
-                <span>← Continue Reading</span>
-              </Link>
-            </>
-          )}
-        </Stack>
+          <Stack
+            type="column"
+            gap={1}
+            css={{
+              span: {
+                color: "$indigo11",
+                cursor: "pointer",
+                "&:hover": { color: "$indigo12" },
+              },
+            }}
+          >
+            {links.prev !== null && (
+              <>
+                <p>Previous</p>
+                <h2>{links.prev.headline}</h2>
+                <p>{links.prev.description}</p>
+                <Link href={`/blog/${links.prev.slug}`}>
+                  <span>← Continue Reading</span>
+                </Link>
+              </>
+            )}
+          </Stack>
 
-        <Stack
-          type="column"
-          gap={1}
-          css={{
-            textAlign: "right",
-            span: {
-              color: "$indigo11",
-              cursor: "pointer",
-              "&:hover": { color: "$indigo12" },
-            },
-          }}
-        >
-          {links.next !== null && (
-            <>
-              <p>Next</p>
-              <h2>{links.next.headline}</h2>
-              <p>{links.next.description}</p>
-              <Link href={`/blog/${links.next.slug}`}>
-                <span>Continue Reading →</span>
-              </Link>
-            </>
-          )}
+          <Stack
+            type="column"
+            gap={1}
+            css={{
+              textAlign: "right",
+              span: {
+                color: "$indigo11",
+                cursor: "pointer",
+                "&:hover": { color: "$indigo12" },
+              },
+            }}
+          >
+            {links.next !== null && (
+              <>
+                <p>Next</p>
+                <h2>{links.next.headline}</h2>
+                <p>{links.next.description}</p>
+                <Link href={`/blog/${links.next.slug}`}>
+                  <span>Continue Reading →</span>
+                </Link>
+              </>
+            )}
+          </Stack>
         </Stack>
-      </Stack>
-    </BlogLayout>
+      </BlogLayout>
+    </>
   );
 }
 

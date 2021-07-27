@@ -31,7 +31,7 @@ function DarkModeToggle() {
   }
 
   return (
-    <IconContainer onClick={toggleTheme}>
+    <IconContainer name="dark-mode" onClick={toggleTheme}>
       <DarkModeIcon isDark={theme === "dark"} />
     </IconContainer>
   );

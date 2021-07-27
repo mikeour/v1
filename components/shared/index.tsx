@@ -50,7 +50,7 @@ export const Stack = styled(motion.div, {
   },
 });
 
-export const IconContainer = styled(motion.div, {
+export const IconContainer = styled("div", {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",

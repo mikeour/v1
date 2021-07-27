@@ -1,24 +1,12 @@
+import { AnimatePresence } from "framer-motion";
 import { styled } from "styles";
-import {
-  Stack,
-  IconContainer,
-  Pulse,
-  AlbumArt,
-  ActionLink,
-} from "components/shared";
-import { Spotify } from "components/icons";
-import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import useNowPlaying from "hooks/useNowPlaying";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
-import fetcher from "lib/fetcher";
+import { Spotify } from "components/icons";
+import { Stack, IconContainer, Pulse, AlbumArt } from "components/shared";
 import LoadingSongs from "components/TopTracksLoadingSpinner";
 
 function NowPlaying() {
   const { track, loading } = useNowPlaying();
-  const { pathname } = useRouter();
 
   if (loading || track === undefined) {
     return <LoadingSongs />;

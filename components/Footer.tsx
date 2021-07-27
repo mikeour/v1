@@ -29,19 +29,16 @@ const funLinks = [
   },
 ];
 
+const externalLinks = [
+  { id: 1, name: "Github" },
+  { id: 2, name: "Twitter" },
+  { id: 3, name: "LinkedIn" },
+];
+
 function Footer() {
   return (
     <FooterWrapper>
-      <FooterContainer
-        type="row"
-        gap={6}
-        css={{
-          "@initial": {
-            gridAutoFlow: "column",
-          },
-          "@bp1": { gridAutoFlow: "row" },
-        }}
-      >
+      <FooterContainer type="row" gap={6}>
         <NowPlayingContainer>
           <NowPlaying />
         </NowPlayingContainer>
@@ -54,30 +51,16 @@ function Footer() {
             ))}
           </Stack>
           <Stack type="column" gap={2} css={{ alignSelf: "flex-start" }}>
-            <Stack type="row" gap={2}>
-              {/* <IconContainer css={{ size: 20 }}>
-              <Github />
-            </IconContainer> */}
-              <p>Github</p>
-              <IconContainer css={{ size: 18, color: "$indigo8" }}>
-                <ExternalLink />
-              </IconContainer>
-            </Stack>
-            <Stack type="row" gap={2}>
-              {/* <IconContainer css={{ size: 18 }}>
-              <Twitter />
-            </IconContainer> */}
-              <p>Twitter</p>
-              <IconContainer css={{ size: 18, color: "$indigo8" }}>
-                <ExternalLink />
-              </IconContainer>
-            </Stack>
-            <Stack type="row" gap={2}>
-              <p>LinkedIn</p>
-              <IconContainer css={{ size: 18, color: "$indigo8" }}>
-                <ExternalLink />
-              </IconContainer>
-            </Stack>
+            {externalLinks.map((link) => {
+              return (
+                <Stack key={link.id} type="row" gap={2}>
+                  <p>{link.name}</p>
+                  <ExternalIconContainer>
+                    <ExternalLink />
+                  </ExternalIconContainer>
+                </Stack>
+              );
+            })}
           </Stack>
         </Stack>
       </FooterContainer>
@@ -104,6 +87,10 @@ const FooterContainer = styled(Stack, {
   maxWidth: "$footer",
   placeContent: "center",
   gridGap: "clamp($2, 7vw, $7) !important",
+  "@initial": {
+    gridAutoFlow: "column",
+  },
+  "@bp1": { gridAutoFlow: "row" },
 });
 
 const NowPlayingContainer = styled("div", {
@@ -124,4 +111,9 @@ const LinkText = styled("p", {
   color: "$slate11",
 
   "&:hover": { color: "$slate12" },
+});
+
+const ExternalIconContainer = styled(IconContainer, {
+  size: 18,
+  color: "$indigo8",
 });

@@ -1,5 +1,4 @@
-import { Stack, ActionLink } from "components/shared";
-import Link from "next/link";
+import { Stack } from "components/shared";
 import Blogposts from "components/Blogposts";
 import { styled } from "styles";
 import type { Blogpost } from "lib/blogposts";
