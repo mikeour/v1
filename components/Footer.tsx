@@ -86,11 +86,13 @@ const FooterContainer = styled(Stack, {
   width: "100%",
   maxWidth: "$footer",
   placeContent: "center",
+  // TODO: Fix specificity of these
   gridGap: "clamp($2, 7vw, $7) !important",
+  gridAutoFlow: "column",
   "@initial": {
     gridAutoFlow: "column",
   },
-  "@bp1": { gridAutoFlow: "row" },
+  "@bp1": { gridAutoFlow: "row !important" },
 });
 
 const NowPlayingContainer = styled("div", {

@@ -39,7 +39,7 @@ const BlogpostContainer = styled(Stack, {
   py: "$4",
   gtc: "1fr 3fr",
   "@initial": { gridAutoFlow: "column", gtc: "1fr 3fr" },
-  "@bp1": { gridAutoFlow: "row", gtc: "1fr" },
+  "@bp1": { gridAutoFlow: "row !important", gtc: "1fr" },
 });
 
 const BlogpostSecondary = styled(Stack, {
