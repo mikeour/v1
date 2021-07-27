@@ -30,9 +30,13 @@ const funLinks = [
 ];
 
 const externalLinks = [
-  { id: 1, name: "Github" },
-  { id: 2, name: "Twitter" },
-  { id: 3, name: "LinkedIn" },
+  { id: 1, name: "Github", url: "https://www.github.com/mikeour" },
+  { id: 2, name: "Twitter", url: "https://www.twitter.com/mikeour" },
+  {
+    id: 3,
+    name: "LinkedIn",
+    url: "https://www.linkedin.co/in/michaelroeslein",
+  },
 ];
 
 function Footer() {
@@ -43,25 +47,33 @@ function Footer() {
           <NowPlaying />
         </NowPlayingContainer>
         <Stack type="row" gap={6}>
-          <Stack type="column" gap={2} css={{ alignSelf: "flex-start" }}>
+          <LinksContainer type="column" gap={2}>
             {links.map((link) => (
               <Link key={link.id} href={link.route}>
                 <LinkText>{link.display}</LinkText>
               </Link>
             ))}
-          </Stack>
-          <Stack type="column" gap={2} css={{ alignSelf: "flex-start" }}>
+          </LinksContainer>
+          <LinksContainer type="column" gap={2}>
             {externalLinks.map((link) => {
               return (
-                <Stack key={link.id} type="row" gap={2}>
-                  <p>{link.name}</p>
-                  <ExternalIconContainer>
+                <ExternalLinkContainer
+                  key={link.id}
+                  type="row"
+                  gap={2}
+                  as="a"
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ExternalLinkText>{link.name}</ExternalLinkText>
+                  <ExternalIconContainer className="link-icon">
                     <ExternalLink />
                   </ExternalIconContainer>
-                </Stack>
+                </ExternalLinkContainer>
               );
             })}
-          </Stack>
+          </LinksContainer>
         </Stack>
       </FooterContainer>
     </FooterWrapper>
@@ -102,6 +114,10 @@ const NowPlayingContainer = styled("div", {
   gtc: "minmax(0, 1fr)",
 });
 
+const LinksContainer = styled(Stack, {
+  alignSelf: "flex-start",
+});
+
 const Link = styled(NextLink, {
   display: "grid",
   gridAutoFlow: "row",
@@ -115,7 +131,27 @@ const LinkText = styled("p", {
   "&:hover": { color: "$slate12" },
 });
 
+const ExternalLinkContainer = styled(Stack, {
+  textDecoration: "none",
+  width: "min-content",
+  cursor: "pointer",
+  color: "$slate11",
+  ".link-icon": {
+    color: "$indigo9",
+  },
+  "&:hover": {
+    color: "$slate12",
+    ".link-icon": {
+      color: "$indigo10",
+    },
+  },
+});
+
+const ExternalLinkText = styled("p", {
+  color: "inherit",
+});
+
 const ExternalIconContainer = styled(IconContainer, {
   size: 18,
-  color: "$indigo8",
+  color: "inherit",
 });
