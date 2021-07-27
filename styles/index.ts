@@ -26,7 +26,7 @@ export const { styled, getCssString, theme, global, keyframes, css } =
       },
       sizes: {
         header: "1100px",
-        content: "900px",
+        content: "1000px",
         footer: "1100px",
       },
       space: {

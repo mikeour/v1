@@ -39,13 +39,7 @@ export default function Blogpost({ blogpost, slug }: any) {
               </Stack>
             </AuthorContainer>
             <StickyContent>
-              <Stack
-                type="column"
-                gap={0}
-                css={{
-                  gap: "0.25rem",
-                }}
-              >
+              <Stack type="column" gap={2}>
                 <TableOfContentsHeader>Table of Contents</TableOfContentsHeader>
                 {headings.map((heading) => {
                   return (
@@ -55,15 +49,9 @@ export default function Blogpost({ blogpost, slug }: any) {
                   );
                 })}
               </Stack>
-              <Stack
-                type="column"
-                gap={0}
-                css={{
-                  gap: "0.25rem",
-                }}
-              >
+              <Stack type="column" gap={2}>
                 <TableOfContentsHeader>Tags</TableOfContentsHeader>
-                <p>React</p>
+                <TableOfContentsLink>React</TableOfContentsLink>
               </Stack>
             </StickyContent>
           </ContentSidebar>
@@ -72,7 +60,7 @@ export default function Blogpost({ blogpost, slug }: any) {
           </Content>
         </ContentContainer>
 
-        <ExtraLinksContainer type="row" gap={1}>
+        <ExtraLinksContainer type="row" gap={4}>
           <ExtraLink type="column" gap={1}>
             {links.prev !== null && (
               <>
@@ -129,7 +117,7 @@ export async function getStaticProps({ params }: any) {
 
 const ContentContainer = styled("div", {
   display: "grid",
-  gtc: "auto minmax(0, 1fr)",
+  gtc: "1fr minmax(0, 2.5fr)",
   gridGap: "2rem",
   position: "relative",
   "@initial": { gtc: "auto minmax(0, 1fr)" },
@@ -154,7 +142,7 @@ const StickyContent = styled("div", {
   top: "2rem",
   display: "grid",
   alignContent: "flex-start",
-  gridGap: "$2",
+  gridGap: "$4",
   justifyContent: "flex-start",
   "@initial": { justifyContent: "flex-start" },
   "@bp1": { justifyContent: "center" },
@@ -188,9 +176,11 @@ const Avatar = styled(Image, {
 const TableOfContentsHeader = styled("p", {
   color: "$slate12",
   fontWeight: "bold",
+  mb: "-0.75rem",
 });
 
 const TableOfContentsLink = styled("p", {
+  // ml: "1rem",
   "&:hover": {
     color: "$slate12",
   },
@@ -204,12 +194,14 @@ const ExtraLinksContainer = styled(Stack, {
   gtc: "1fr 1fr",
   mt: "$5",
   pt: "2rem",
+  alignItems: "flex-start",
   borderTop: "1px solid $gray10",
   "@initial": {
     gtc: "1fr 1fr",
   },
   "@bp1": {
     gtc: "1fr",
+    gridAutoFlow: "row !important",
   },
 });
 
