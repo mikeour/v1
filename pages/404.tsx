@@ -6,7 +6,7 @@ export default function Custom404() {
       <Head>
         <title key="title">Page not found</title>
       </Head>
-      <h1>Oh no, this is unexpected</h1>
+      <h1 style={{ textAlign: "center" }}>Oh no, this is unexpected</h1>
       <p>Page not found</p>
     </>
   );
