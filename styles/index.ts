@@ -30,6 +30,7 @@ export const { styled, getCssString, theme, global, keyframes, css } =
         footer: "1100px",
       },
       space: {
+        0: "0rem",
         1: "0.75rem",
         2: "1rem",
         3: "1.5rem",

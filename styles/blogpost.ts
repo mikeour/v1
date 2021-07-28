@@ -5,12 +5,9 @@ export default css({
     minWidth: "0",
   },
 
-  ol: {
-    ml: "$2",
-  },
-
   li: {
     listStyle: "inside",
+    ml: "$2",
   },
 
   "code:not([class])": {

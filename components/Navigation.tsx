@@ -30,16 +30,7 @@ function Navigation() {
           </NextLink>
           {links.map((link) => (
             <Link key={link.id} href={link.route}>
-              <LinkText
-                tabIndex={0}
-                css={{
-                  display: "grid",
-                  "@initial": { display: "grid" },
-                  "@bp1": { display: "none" },
-                }}
-              >
-                {link.display}
-              </LinkText>
+              <LinkText tabIndex={0}>{link.display}</LinkText>
             </Link>
           ))}
         </Stack>
@@ -101,18 +92,21 @@ const Link = styled(NextLink, {
   position: "relative",
 });
 
-const LinkText = styled(motion.span, {
+const LinkText = styled("span", {
+  display: "grid",
   color: "$slate11",
   cursor: "pointer",
   background: "none",
   fontSize: "$3",
   transform: "translateY(2.2px)",
   br: "8px",
-
   "&:hover": { color: "$slate12" },
   "&:focus": {
     outline: "3px solid $colors$slate8",
     outlineOffset: "5px",
     color: "$slate12",
   },
+
+  "@initial": { display: "grid" },
+  "@bp1": { display: "none" },
 });

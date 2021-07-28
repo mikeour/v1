@@ -8,7 +8,7 @@ import components from "components/mdx";
 import { Stack } from "components/shared";
 import { getBlogpostBySlug, getAllBlogposts } from "lib/blogposts";
 import { styled } from "styles";
-import { getHeadings, slugify } from "utils";
+import { getHeadings } from "utils";
 import blogpostStyles from "styles/blogpost";
 
 export default function Blogpost({ blogpost, slug }: any) {
@@ -95,14 +95,16 @@ export default function Blogpost({ blogpost, slug }: any) {
 export async function getStaticPaths() {
   const blogposts = getAllBlogposts();
 
+  const paths = blogposts.map(({ slug }) => {
+    return {
+      params: {
+        slug,
+      },
+    };
+  });
+
   return {
-    paths: blogposts.map((blogpost: any) => {
-      return {
-        params: {
-          slug: blogpost.slug,
-        },
-      };
-    }),
+    paths,
     fallback: false,
   };
 }

@@ -10,12 +10,19 @@ interface BlogpostsProps {
 function Blogposts({ blogposts }: BlogpostsProps) {
   return (
     <>
-      {blogposts.reverse().map((blogpost) => {
+      {blogposts.map((blogpost) => {
         return (
           <BlogpostContainer key={blogpost.slug} type="row" gap={4}>
-            <BlogpostSecondary type="column" gap={0}>
-              <span style={{ fontWeight: "bold" }}>React</span>
-              <p>{blogpost.date}</p>
+            <BlogpostSecondary type="column" gap={2}>
+              <BlogpostDate>{blogpost.date}</BlogpostDate>
+
+              <BlogpostTags type="column" gap={1}>
+                {blogpost.tags.map((tag) => (
+                  <Link key={tag} href={`/tag/${tag.toLowerCase()}`}>
+                    <span>{tag}</span>
+                  </Link>
+                ))}
+              </BlogpostTags>
             </BlogpostSecondary>
 
             <BlogpostInfo type="column" gap={1}>
@@ -44,9 +51,22 @@ const BlogpostContainer = styled(Stack, {
 
 const BlogpostSecondary = styled(Stack, {
   alignSelf: "flex-start",
+  span: {
+    color: "$indigo12",
+    cursor: "pointer",
+    "&:hover": { color: "$indigo12" },
+  },
   "@initial": { gridAutoFlow: "row" },
   "@bp1": { gridAutoFlow: "column", gtc: "1fr auto" },
 });
+
+const BlogpostDate = styled("p", {
+  "@bp1": {
+    alignSelf: "flex-start",
+  },
+});
+
+const BlogpostTags = styled(Stack, {});
 
 const BlogpostInfo = styled(Stack, {
   span: {

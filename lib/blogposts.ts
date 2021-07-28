@@ -3,11 +3,18 @@ import path from "path";
 import matter from "gray-matter";
 import { serialize } from "next-mdx-remote/serialize";
 
-const blogpostDirectory = path.join(process.cwd(), "blogposts");
+export type Blogpost = {
+  slug: string;
+  title: string;
+  image: string;
+  headline: string;
+  description: string;
+  author: string;
+  date: string;
+  tags: Array<string>;
+};
 
-export async function getFiles() {
-  return fs.readdirSync(blogpostDirectory);
-}
+const blogpostDirectory = path.join(process.cwd(), "blogposts");
 
 export async function getBlogpostBySlug(slug: string) {
   const filepath = path.join(blogpostDirectory, `${slug}.mdx`);
@@ -27,9 +34,15 @@ export async function getBlogpostBySlug(slug: string) {
     options
   );
 
+  const tags: string = data.tags;
+
   const frontmatter = {
     ...data,
     date: formattedDate,
+    tags: tags
+      .split(",")
+      .map((entry) => entry.trim())
+      .filter((entry) => entry),
   };
 
   const allBlogposts = getAllBlogposts();
@@ -46,21 +59,11 @@ export async function getBlogpostBySlug(slug: string) {
   return { mdxSource, frontmatter, links, content };
 }
 
-export type Blogpost = {
-  slug: string;
-  title: string;
-  image: string;
-  headline: string;
-  description: string;
-  author: string;
-  date: string;
-};
-
 export function getAllBlogposts() {
   //Reads all the files in the post directory
   const fileNames = fs.readdirSync(blogpostDirectory);
 
-  const allPostsData = fileNames.map((filename) => {
+  let allBlogposts = fileNames.map((filename) => {
     const slug = filename.replace(".mdx", "");
 
     const fullPath = path.join(blogpostDirectory, filename);
@@ -79,9 +82,15 @@ export function getAllBlogposts() {
       options
     );
 
+    const tags: string = data.tags;
+
     const frontmatter = {
       ...data,
       date: formattedDate,
+      tags: tags
+        .split(",")
+        .map((entry) => entry.trim())
+        .filter((entry) => entry),
     };
 
     return {
@@ -90,5 +99,12 @@ export function getAllBlogposts() {
     };
   });
 
-  return allPostsData as Array<Blogpost>;
+  allBlogposts = allBlogposts.sort((firstPost, secondPost) => {
+    const firstTime = new Date(firstPost.date).getTime();
+    const secondTime = new Date(secondPost.date).getTime();
+
+    return secondTime - firstTime;
+  });
+
+  return allBlogposts as Array<Blogpost>;
 }
