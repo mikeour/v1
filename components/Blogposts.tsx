@@ -1,6 +1,6 @@
 import { styled } from "styles";
-import { Stack } from "components/shared";
-import Link from "next/link";
+import { Stack, Link } from "components/shared";
+import { handleTag } from "utils";
 import type { Blogpost } from "lib/blogposts";
 
 interface BlogpostsProps {
@@ -17,9 +17,10 @@ function Blogposts({ blogposts }: BlogpostsProps) {
               <BlogpostDate>{blogpost.date}</BlogpostDate>
 
               <BlogpostTags type="column" gap={1}>
+                <TableOfContentsHeader>Tags</TableOfContentsHeader>
                 {blogpost.tags.map((tag) => (
-                  <Link key={tag} href={`/tag/${tag.toLowerCase()}`}>
-                    <span>{tag}</span>
+                  <Link key={tag} href={`/tag/${handleTag(tag)}`}>
+                    {tag}
                   </Link>
                 ))}
               </BlogpostTags>
@@ -28,8 +29,8 @@ function Blogposts({ blogposts }: BlogpostsProps) {
             <BlogpostInfo type="column" gap={1}>
               <h2>{blogpost.headline}</h2>
               <p>{blogpost.description}</p>
-              <Link href={`/blog/${blogpost.slug}`}>
-                <span>Continue Reading →</span>
+              <Link href={`/blog/${blogpost.slug}`} bold>
+                Continue Reading →
               </Link>
             </BlogpostInfo>
           </BlogpostContainer>
@@ -51,11 +52,6 @@ const BlogpostContainer = styled(Stack, {
 
 const BlogpostSecondary = styled(Stack, {
   alignSelf: "flex-start",
-  span: {
-    color: "$indigo12",
-    cursor: "pointer",
-    "&:hover": { color: "$indigo12" },
-  },
   "@initial": { gridAutoFlow: "row" },
   "@bp1": { gridAutoFlow: "column", gtc: "1fr auto" },
 });
@@ -66,12 +62,15 @@ const BlogpostDate = styled("p", {
   },
 });
 
-const BlogpostTags = styled(Stack, {});
-
-const BlogpostInfo = styled(Stack, {
-  span: {
-    color: "$indigo11",
-    cursor: "pointer",
-    "&:hover": { color: "$indigo12" },
+const BlogpostTags = styled(Stack, {
+  "@bp1": {
+    display: "none",
   },
+});
+
+const BlogpostInfo = styled(Stack, {});
+
+const TableOfContentsHeader = styled("p", {
+  color: "$slate12",
+  mb: "-0.5rem",
 });

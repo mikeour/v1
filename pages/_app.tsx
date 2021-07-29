@@ -4,14 +4,16 @@ import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Hydrate } from "react-query/hydration";
 import SiteLayout from "components/SiteLayout";
+import useProgress from "hooks/useProgress";
 import { darkTheme } from "styles";
-import globalStyles from "styles/global";
+import createGlobalStyles from "styles/global";
 import type { AppProps } from "next/app";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
 
-  globalStyles();
+  createGlobalStyles();
+  useProgress();
 
   return (
     <>
@@ -38,4 +40,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+export default App;

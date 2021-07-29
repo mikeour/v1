@@ -3,36 +3,30 @@ import { getRecentlyPlayed } from "lib/spotify";
 
 export default async (_: NextApiRequest, res: NextApiResponse) => {
   const response = await getRecentlyPlayed();
-  const data: SpotifyApi.UsersRecentlyPlayedTracksResponse = await response.json();
+  const data: SpotifyApi.UsersRecentlyPlayedTracksResponse =
+    await response.json();
 
-  const recentTrack = data.items[0].track;
+  const recentTracks = [...data.items].slice(0, 20).map((item) => {
+    const { track, played_at } = item;
 
-  // const info = [...data.items]
-  //   .slice(0, 10)
-  //   .map((trackContext) => trackContext.track)
-  //   .map((track) => ({
-  //     artist: track.artists.map((artist) => artist.name).join(", "),
-  //     // @ts-ignore
-  //     album: track.album.images[0].url,
-  //     songUrl: track.external_urls.spotify,
-  //     title: track.name,
-  //     // @ts-ignore
-  //     albumImageUrl: track.album.images[0].url,
-  //     isPlaying: false,
-  //   }));
+    return {
+      artist: track.artists.map((artist) => artist.name).join(", "),
+      // @ts-ignore
+      album: track.album.name,
+      songUrl: track.external_urls.spotify,
+      title: track.name,
+      // @ts-ignore
+      albumImageUrl: track.album.images[0].url,
+      playedAt: played_at,
+      isPlaying: false,
+    };
+  });
 
-  // console.log(JSON.stringify(info, null, 2));
+  const recentTrack = recentTracks[0];
 
   return res.status(200).json({
-    artist: recentTrack.artists.map((artist) => artist.name).join(", "),
-    // @ts-ignore
-    album: recentTrack.album.images[0].url,
-    songUrl: recentTrack.external_urls.spotify,
-    title: recentTrack.name,
-    // @ts-ignore
-    albumImageUrl: recentTrack.album.images[0].url,
-    isPlaying: false,
-    playedAt: data.items[0].played_at,
+    recentTrack,
+    recentTracks,
   });
 };
 

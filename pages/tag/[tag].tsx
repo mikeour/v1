@@ -5,6 +5,7 @@ import type { Blogpost } from "lib/blogposts";
 import { styled } from "styles";
 import { Stack } from "components/shared";
 import Blogposts from "components/Blogposts";
+import { handleTag } from "utils";
 
 interface TagPageProps {
   blogposts: Array<Blogpost>;
@@ -45,7 +46,7 @@ export async function getStaticPaths() {
   const paths = [...tags].map((tag: string) => {
     return {
       params: {
-        tag: tag.toLowerCase(),
+        tag: handleTag(tag),
       },
     };
   });
@@ -57,15 +58,25 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: any) {
-  const blogposts = getAllBlogposts();
-  const blogpostsByTag = blogposts.filter((blogpost) =>
-    blogpost.tags.some((tag) => tag.toLowerCase() === params.tag)
+  const allBlogposts = getAllBlogposts();
+  const blogpostsContainingTag = allBlogposts.filter((blogpost) =>
+    blogpost.tags.some((tag) => handleTag(tag) === params.tag)
   );
+
+  const firstBlogpostContainingTag = blogpostsContainingTag.find((blogpost) =>
+    blogpost.tags.find((tag) => handleTag(tag) === params.tag)
+  );
+
+  const tag = firstBlogpostContainingTag?.tags.find(
+    (tag) => handleTag(tag) === params.tag
+  );
+
+  if (tag === undefined) throw new Error("Unable to find tag");
 
   return {
     props: {
-      tag: params.tag,
-      blogposts: blogpostsByTag,
+      tag,
+      blogposts: blogpostsContainingTag,
     },
   };
 }

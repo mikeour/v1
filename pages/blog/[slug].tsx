@@ -1,14 +1,13 @@
 import Image from "next/image";
 import Head from "next/head";
-import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote";
 import BlogLayout from "components/BlogLayout";
 import Header from "components/Header";
 import components from "components/mdx";
-import { Stack } from "components/shared";
+import { Stack, Link } from "components/shared";
 import { getBlogpostBySlug, getAllBlogposts } from "lib/blogposts";
 import { styled } from "styles";
-import { getHeadings } from "utils";
+import { getHeadings, handleTag } from "utils";
 import blogpostStyles from "styles/blogpost";
 
 export default function Blogpost({ blogpost, slug }: any) {
@@ -51,7 +50,13 @@ export default function Blogpost({ blogpost, slug }: any) {
               </Stack>
               <Stack type="column" gap={2}>
                 <TableOfContentsHeader>Tags</TableOfContentsHeader>
-                <TableOfContentsLink>React</TableOfContentsLink>
+                {frontmatter.tags.map((tag: string) => {
+                  return (
+                    <Link key={tag} href={`/tag/${handleTag(tag)}`}>
+                      {tag}
+                    </Link>
+                  );
+                })}
               </Stack>
             </StickyContent>
           </ContentSidebar>
@@ -67,8 +72,8 @@ export default function Blogpost({ blogpost, slug }: any) {
                 <p>Previous</p>
                 <h2>{links.prev.headline}</h2>
                 <p>{links.prev.description}</p>
-                <Link href={`/blog/${links.prev.slug}`}>
-                  <span>← Continue Reading</span>
+                <Link href={`/blog/${links.prev.slug}`} bold>
+                  ← Continue Reading
                 </Link>
               </>
             )}
@@ -80,8 +85,8 @@ export default function Blogpost({ blogpost, slug }: any) {
                 <p>Next</p>
                 <h2>{links.next.headline}</h2>
                 <p>{links.next.description}</p>
-                <Link href={`/blog/${links.next.slug}`}>
-                  <span>Continue Reading →</span>
+                <Link href={`/blog/${links.next.slug}`} bold>
+                  Continue Reading →
                 </Link>
               </>
             )}
@@ -208,12 +213,6 @@ const ExtraLinksContainer = styled(Stack, {
 });
 
 const ExtraLink = styled(Stack, {
-  span: {
-    color: "$indigo11",
-    cursor: "pointer",
-    "&:hover": { color: "$indigo12" },
-  },
-
   variants: {
     alignLeft: {
       true: {

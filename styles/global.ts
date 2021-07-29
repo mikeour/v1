@@ -58,4 +58,16 @@ export default global({
   code: {
     fontFamily: "$code",
   },
+
+  "#nprogress": { pointerEvents: "none" },
+
+  "#nprogress .bar": {
+    background: "$indigo9",
+    position: "fixed",
+    zIndex: 1031,
+    top: "0",
+    left: "0",
+    width: "100%",
+    height: "5px",
+  },
 });

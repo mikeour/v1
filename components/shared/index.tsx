@@ -2,6 +2,7 @@ import React from "react";
 import { styled, keyframes } from "styles";
 import { motion } from "framer-motion";
 import { ArrowRight } from "components/icons";
+import NextLink from "next/link";
 
 export const Stack = styled(motion.div, {
   display: "grid",
@@ -91,6 +92,37 @@ export const Pulse = styled("div", {
   zIndex: "-1",
 });
 
+export function Link({
+  href,
+  bold = false,
+  children,
+  ...props
+}: {
+  children: React.ReactNode;
+  href: string;
+  bold?: boolean;
+}) {
+  return (
+    <NextLink href={href} {...props}>
+      <LinkText bold={bold}>{children}</LinkText>
+    </NextLink>
+  );
+}
+
+const LinkText = styled("span", {
+  color: "$indigo11",
+  cursor: "pointer",
+  "&:hover": { color: "$indigo12" },
+
+  variants: {
+    bold: {
+      true: {
+        fontWeight: "bold",
+      },
+    },
+  },
+});
+
 export const ActionLink = ({ children }: any) => {
   return (
     <Stack
@@ -111,14 +143,6 @@ export const ActionLink = ({ children }: any) => {
     </Stack>
   );
 };
-
-const LinkText = styled("p", {
-  fontSize: "clamp(0.85rem, 1.75vw, 0.85rem)",
-  fontWeight: "400",
-  letterSpacing: "2px",
-  textTransform: "uppercase",
-  whiteSpace: "nowrap",
-});
 
 export const ActionLinkGhost = styled(ActionLink, {
   color: "$slate12",

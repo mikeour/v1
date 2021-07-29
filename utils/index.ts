@@ -22,3 +22,13 @@ export function getHeadings(source: string) {
     return { text, level, link };
   });
 }
+
+/**
+ * Formats tag for url usage
+ *
+ * "Design Systems" ==> "design-systems"
+ */
+
+export function handleTag(tag: string) {
+  return slugify(tag.toLowerCase());
+}
