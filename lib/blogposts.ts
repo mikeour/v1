@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { serialize } from "next-mdx-remote/serialize";
+import { getFormattedDate, handleTag } from "utils";
 
 export type Blogpost = {
   slug: string;
@@ -23,22 +24,12 @@ export async function getBlogpostBySlug(slug: string) {
 
   const mdxSource = await serialize(content);
 
-  const options: Intl.DateTimeFormatOptions = {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  };
-
-  const formattedDate = new Date(data.date).toLocaleDateString(
-    "en-IN",
-    options
-  );
-
+  const date = getFormattedDate(data.date);
   const tags: string = data.tags;
 
   const frontmatter = {
     ...data,
-    date: formattedDate,
+    date,
     tags: tags
       .split(",")
       .map((entry) => entry.trim())
@@ -71,22 +62,13 @@ export function getAllBlogposts() {
     const fileContents = fs.readFileSync(fullPath, "utf8");
     const { data } = matter(fileContents);
 
-    const options: Intl.DateTimeFormatOptions = {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    };
-
-    const formattedDate = new Date(data.date).toLocaleDateString(
-      "en-IN",
-      options
-    );
+    const date = getFormattedDate(data.date);
 
     const tags: string = data.tags;
 
     const frontmatter = {
       ...data,
-      date: formattedDate,
+      date,
       tags: tags
         .split(",")
         .map((entry) => entry.trim())
@@ -107,4 +89,28 @@ export function getAllBlogposts() {
   });
 
   return allBlogposts as Array<Blogpost>;
+}
+
+export function getTagPathsFromBlogposts(
+  blogposts: Array<Blogpost>
+): Array<{ params: { tag: string } }> {
+  const tags = [];
+
+  for (const blogpost of blogposts) {
+    for (const tag of blogpost.tags) {
+      if (tags.includes(tag) === false) {
+        tags.push(tag);
+      }
+    }
+  }
+
+  const paths = tags.map((tag: string) => {
+    return {
+      params: {
+        tag: handleTag(tag),
+      },
+    };
+  });
+
+  return paths;
 }

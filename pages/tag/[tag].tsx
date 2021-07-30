@@ -1,6 +1,5 @@
 import Head from "next/head";
-import NextLink from "next/link";
-import { getAllBlogposts } from "lib/blogposts";
+import { getAllBlogposts, getTagPathsFromBlogposts } from "lib/blogposts";
 import type { Blogpost } from "lib/blogposts";
 import { styled } from "styles";
 import { Stack } from "components/shared";
@@ -34,22 +33,7 @@ export default TagPage;
 
 export async function getStaticPaths() {
   const blogposts = getAllBlogposts();
-
-  const tags = new Set<string>();
-
-  for (const blogpost of blogposts) {
-    for (const tag of blogpost.tags) {
-      tags.add(tag);
-    }
-  }
-
-  const paths = [...tags].map((tag: string) => {
-    return {
-      params: {
-        tag: handleTag(tag),
-      },
-    };
-  });
+  const paths = getTagPathsFromBlogposts(blogposts);
 
   return {
     paths,
@@ -59,6 +43,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: any) {
   const allBlogposts = getAllBlogposts();
+
   const blogpostsContainingTag = allBlogposts.filter((blogpost) =>
     blogpost.tags.some((tag) => handleTag(tag) === params.tag)
   );
@@ -80,9 +65,3 @@ export async function getStaticProps({ params }: any) {
     },
   };
 }
-
-const Link = styled(NextLink, {
-  color: "white",
-  letterSpacing: "0.25px",
-  fontSize: "1.1rem",
-});

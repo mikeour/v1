@@ -32,3 +32,15 @@ export function getHeadings(source: string) {
 export function handleTag(tag: string) {
   return slugify(tag.toLowerCase());
 }
+
+export function getFormattedDate(date: string): string {
+  const options: Intl.DateTimeFormatOptions = {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  };
+
+  const formattedDate = new Date(date).toLocaleDateString("en-US", options);
+
+  return formattedDate;
+}

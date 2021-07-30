@@ -1,5 +1,4 @@
 import Head from "next/head";
-import NextLink from "next/link";
 import { getAllBlogposts } from "lib/blogposts";
 import type { Blogpost } from "lib/blogposts";
 import { styled } from "styles";
@@ -42,9 +41,3 @@ export async function getStaticProps() {
     },
   };
 }
-
-const Link = styled(NextLink, {
-  color: "white",
-  letterSpacing: "0.25px",
-  fontSize: "1.1rem",
-});
