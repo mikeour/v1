@@ -24,7 +24,13 @@ interface NowPlayingData {
   title: string;
 }
 
-function useNowPlaying() {
+interface NowPlayingOptions {
+  useFallback?: boolean;
+}
+
+function useNowPlaying(
+  { useFallback }: NowPlayingOptions = { useFallback: true }
+) {
   const { data: currentTrack, isLoading: isLoadingNowPlaying } = useQuery(
     "now-playing",
     () => fetcher<NowPlayingData>("/api/now-playing"),
@@ -37,10 +43,14 @@ function useNowPlaying() {
       { enabled: currentTrack?.isPlaying === false }
     );
 
+  const track = currentTrack?.isPlaying
+    ? currentTrack
+    : useFallback == true
+    ? recentlyPlayedTrack?.recentTrack ?? null
+    : null;
+
   return {
-    track: currentTrack?.isPlaying
-      ? currentTrack
-      : recentlyPlayedTrack?.recentTrack,
+    track,
     loading: isLoadingNowPlaying || isLoadingRecentlyPlayed,
   };
 }

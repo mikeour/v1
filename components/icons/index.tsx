@@ -1,4 +1,4 @@
-import { styled } from "styles";
+import { styled, keyframes } from "styles";
 
 const SVG = styled("svg", {});
 
@@ -7,7 +7,7 @@ export const Spotify = () => (
     viewBox="0 0 496 512"
     focusable="false"
     role="img"
-    fill="currentColor"
+    fill="#2FD566"
     xmlns="http://www.w3.org/2000/svg"
     css={{
       position: "relative",
@@ -17,7 +17,7 @@ export const Spotify = () => (
     }}
   >
     <path
-      fill="currentColor"
+      fill="#2FD566"
       d="M248 8C111.1 8 0 119.1 0 256s111.1 248 248 248 248-111.1 248-248S384.9 8 248 8zm100.7 364.9c-4.2 0-6.8-1.3-10.7-3.6-62.4-37.6-135-39.2-206.7-24.5-3.9 1-9 2.6-11.9 2.6-9.7 0-15.8-7.7-15.8-15.8 0-10.3 6.1-15.2 13.6-16.8 81.9-18.1 165.6-16.5 237 26.2 6.1 3.9 9.7 7.4 9.7 16.5s-7.1 15.4-15.2 15.4zm26.9-65.6c-5.2 0-8.7-2.3-12.3-4.2-62.5-37-155.7-51.9-238.6-29.4-4.8 1.3-7.4 2.6-11.9 2.6-10.7 0-19.4-8.7-19.4-19.4s5.2-17.8 15.5-20.7c27.8-7.8 56.2-13.6 97.8-13.6 64.9 0 127.6 16.1 177 45.5 8.1 4.8 11.3 11 11.3 19.7-.1 10.8-8.5 19.5-19.4 19.5zm31-76.2c-5.2 0-8.4-1.3-12.9-3.9-71.2-42.5-198.5-52.7-280.9-29.7-3.6 1-8.1 2.6-12.9 2.6-13.2 0-23.3-10.3-23.3-23.6 0-13.6 8.4-21.3 17.4-23.9 35.2-10.3 74.6-15.2 117.5-15.2 73 0 149.5 15.2 205.4 47.8 7.8 4.5 12.9 10.7 12.9 22.6 0 13.6-11 23.3-23.2 23.3z"
     ></path>
   </SVG>
@@ -122,3 +122,106 @@ export const ExternalLink = () => (
     <path d="M16 5h1.58l-6.29 6.28a1 1 0 000 1.42 1 1 0 001.42 0L19 6.42V8a1 1 0 001 1 1 1 0 001-1V4a1 1 0 00-1-1h-4a1 1 0 000 2z"></path>
   </svg>
 );
+
+export function Letterboxd() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+      <defs>
+        <path id="path-1" d="M0 0H129.847V141.389H0z"></path>
+        <path id="path-3" d="M0 0H129.847V141.389H0z"></path>
+      </defs>
+      <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+        <circle cx="250" cy="250" r="250" fill="#202830"></circle>
+        <g transform="translate(61 180)">
+          <g>
+            <ellipse
+              cx="189"
+              cy="69.973"
+              fill="#00E054"
+              rx="70.079"
+              ry="69.973"
+            ></ellipse>
+            <g transform="translate(248.153)">
+              <mask id="mask-2" fill="#fff">
+                <use xlinkHref="#path-1"></use>
+              </mask>
+              <ellipse
+                cx="59.769"
+                cy="69.973"
+                fill="#40BCF4"
+                mask="url(#mask-2)"
+                rx="70.079"
+                ry="69.973"
+              ></ellipse>
+            </g>
+            <g>
+              <mask id="mask-4" fill="#fff">
+                <use xlinkHref="#path-3"></use>
+              </mask>
+              <ellipse
+                cx="70.079"
+                cy="69.973"
+                fill="#FF8000"
+                mask="url(#mask-4)"
+                rx="70.079"
+                ry="69.973"
+              ></ellipse>
+            </g>
+            <path
+              fill="#FFF"
+              d="M129.54 107.022c-6.73-10.744-10.619-23.443-10.619-37.049 0-13.606 3.89-26.305 10.618-37.049 6.73 10.744 10.618 23.443 10.618 37.05 0 13.605-3.889 26.304-10.618 37.048zM248.46 32.924c6.73 10.744 10.619 23.443 10.619 37.05 0 13.605-3.89 26.304-10.618 37.048-6.73-10.744-10.618-23.443-10.618-37.049 0-13.606 3.889-26.305 10.618-37.049z"
+            ></path>
+          </g>
+        </g>
+      </g>
+    </svg>
+  );
+}
+
+export function NowPlayingIcon() {
+  return (
+    <NowPlayingContainer>
+      <NowPlayingBar className="bar-1" />
+      <NowPlayingBar className="bar-2" />
+      <NowPlayingBar className="bar-3" />
+    </NowPlayingContainer>
+  );
+}
+
+const NowPlayingContainer = styled("div", {
+  size: "1rem",
+  borderRadius: "4px",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "flex-end",
+
+  ".bar-1": {
+    height: "60%",
+  },
+
+  ".bar-2": {
+    height: "30%",
+    animationDelay: "-2.2s",
+  },
+
+  ".bar-3": {
+    height: "75%",
+    animationDelay: "-3.7s",
+  },
+});
+
+const UpAndDown = keyframes({
+  "10%": { height: "30%" },
+  "30%": { height: "100%" },
+  "60%": { height: "50%" },
+  "80%": { height: "75%" },
+  "100%": { height: "60%" },
+});
+
+const NowPlayingBar = styled("span", {
+  display: "inline-block",
+  background: "$mediaGreen",
+  width: "30%",
+  height: "100%",
+  animation: `${UpAndDown} 1.3s ease infinite alternate`,
+});

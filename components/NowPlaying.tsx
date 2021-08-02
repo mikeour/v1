@@ -2,14 +2,14 @@ import Link from "next/link";
 import { AnimatePresence } from "framer-motion";
 import { styled } from "styles";
 import useNowPlaying from "hooks/useNowPlaying";
-import { Spotify } from "components/icons";
+import { Spotify, NowPlayingIcon } from "components/icons";
 import { Stack, IconContainer, Pulse, AlbumArt } from "components/shared";
 import LoadingSongs from "components/TopTracksLoadingSpinner";
 
 function NowPlaying() {
   const { track, loading } = useNowPlaying();
 
-  if (loading || track === undefined) {
+  if (loading || track === null) {
     return <LoadingSongs />;
   }
 
@@ -21,7 +21,7 @@ function NowPlaying() {
         css={{
           width: "100%",
           bg: "$slate6",
-          br: "9px",
+          br: "6px",
           px: "$1",
           py: "$1",
           zIndex: 1,
@@ -31,7 +31,7 @@ function NowPlaying() {
           boxShadow: "none",
           transition: "box-shadow 300ms ease",
           "&:hover": {
-            boxShadow: "0 0 4px 2px #50D565",
+            boxShadow: "0 0 5px 3px $colors$indigo9",
           },
         }}
         initial={{ opacity: 0, scale: 0.95 }}
@@ -56,9 +56,8 @@ function NowPlaying() {
               <TrackName>{track.title}</TrackName>
               <ArtistName>{track.artist}</ArtistName>
             </Stack>
-            <IconContainer css={{ size: "18px", color: "#50D565" }}>
-              <Spotify />
-              {track?.isPlaying && <Pulse />}
+            <IconContainer css={{ size: "18px", color: "$mediaGreen" }}>
+              {track?.isPlaying ? <NowPlayingIcon /> : <Spotify />}
             </IconContainer>
           </Stack>
         </AnimatePresence>

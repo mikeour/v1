@@ -21,12 +21,9 @@ const links = [
   { id: 4, route: "/contact", display: "Contact" },
 ];
 
-const funLinks = [
-  {
-    id: 1,
-    route: "/toptracks",
-    display: "Top Tracks",
-  },
+const additionalLinks = [
+  { id: 1, route: "/music", display: "Music" },
+  { id: 2, route: "/movies", display: "Movies" },
 ];
 
 const externalLinks = [
@@ -46,9 +43,17 @@ function Footer() {
         <NowPlayingContainer>
           <NowPlaying />
         </NowPlayingContainer>
-        <Stack type="row" gap={6}>
+        <Stack type="row" gap={5}>
           <LinksContainer type="column" gap={2}>
             {links.map((link) => (
+              <Link key={link.id} href={link.route}>
+                <LinkText>{link.display}</LinkText>
+              </Link>
+            ))}
+          </LinksContainer>
+
+          <LinksContainer type="column" gap={2}>
+            {additionalLinks.map((link) => (
               <Link key={link.id} href={link.route}>
                 <LinkText>{link.display}</LinkText>
               </Link>

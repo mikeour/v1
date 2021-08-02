@@ -28,11 +28,11 @@ function Navigation() {
               <Logo />
             </LogoContainer>
           </NextLink>
-          {links.map((link) => (
+          {/* {links.map((link) => (
             <Link key={link.id} href={link.route}>
               <LinkText tabIndex={0}>{link.display}</LinkText>
             </Link>
-          ))}
+          ))} */}
         </Stack>
 
         <DarkModeToggle />
@@ -69,7 +69,7 @@ const NavigationWrapper = styled("nav", {
 });
 
 const NavigationContainer = styled("div", {
-  p: "2rem",
+  p: "$2",
   margin: "0 auto",
   width: "100%",
   // Magic number to prevent layout shift when dark mode toggle is first painted to screen

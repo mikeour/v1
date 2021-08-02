@@ -23,10 +23,17 @@ export const { styled, getCssString, theme, global, keyframes, css } =
         ...slate,
         ...blackA,
         ...whiteA,
+        mediaGreen: "#50D565",
+        "dreamy-gradients-yellow": `#FFAA6C`,
+        "dreamy-gradients-orange": `radial-gradient(111.63% 111.63% at 42.64% -5.82%, #FFA800 33.65%, #FF0000 44.58%, #FF47D6 100%)`,
+        "dreamy-gradients-red": `radial-gradient(111.63% 111.63% at 42.64% -5.82%, #FF0000 33.65%, #FF47D6 44.58%, #FFA800 100%)`,
+        "dreamy-gradients-purple": `linear-gradient(141.55deg, #575EFF -3.79%, #E478FF 82.82%);`,
+        "dreamy-gradients-blue": `radial-gradient(111.63% 111.63% at 42.64% -5.82%, #00AAFF 33.65%, #00AAFF 44.58%, #00AAFF 100%)`,
+        "dreamy-gradients-green": `linear-gradient(180deg, #00FF85 0%, rgba(0, 255, 71, 0) 100%);`,
       },
       sizes: {
         header: "1100px",
-        content: "1000px",
+        content: "950px",
         footer: "1100px",
       },
       space: {

@@ -1,12 +1,46 @@
 import Head from "next/head";
 import useRecentlyPlayed from "hooks/useRecentlyPlayed";
-import { styled } from "styles";
+import { styled, keyframes } from "styles";
 import { Stack, AlbumArt } from "components/shared";
+import { NowPlayingIcon, Spotify } from "components/icons";
 // import { Play } from 'components/icons'
 import timeAgo from "lib/timeago";
+import useNowPlaying from "hooks/useNowPlaying";
+
+function SkeletonTrack() {
+  return (
+    <Stack
+      type="row"
+      gap={2}
+      css={{
+        gtc: "$$gridTracks",
+        px: "$1",
+        py: "$1",
+        br: "8px",
+
+        "@bp1": {
+          gtc: "$$gridTracksSmall",
+        },
+      }}
+    >
+      <Stack type="row" gap={1}>
+        <AlbumArtSkeleton />
+
+        <SongInfoContainer type="column" gap={1}>
+          <TextSkeleton size={9} />
+          <TextSkeleton />
+        </SongInfoContainer>
+      </Stack>
+      <HiddenTextSkeleton size={8} />
+      <HiddenTextSkeleton size={3} />
+      <TextSkeleton size={4} />
+    </Stack>
+  );
+}
 
 function MusicPage() {
-  const { data } = useRecentlyPlayed();
+  const { data, isLoading } = useRecentlyPlayed();
+  const { track, loading } = useNowPlaying({ useFallback: false });
 
   return (
     <>
@@ -15,7 +49,21 @@ function MusicPage() {
       </Head>
       <Stack type="column" gap={1} css={{ py: "$2" }}>
         <Stack type="column" gap={1} css={{ py: "$4" }}>
-          <h1>Music</h1>
+          <Stack type="row" gap={2} css={{ alignItems: "baseline" }}>
+            <h1>Music</h1>
+            <Stack
+              type="row"
+              gap={1}
+              css={{
+                span: { color: "$slate10" },
+              }}
+            >
+              <span>via Spotify</span>
+              <IconContainer>
+                <Spotify />
+              </IconContainer>
+            </Stack>
+          </Stack>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi
             aspernatur adipisci iusto dicta esse perferendis id, ipsa itaque
@@ -26,22 +74,19 @@ function MusicPage() {
       </Stack>
 
       <Container type="column" gap={1}>
-        {/* <span>Recently Played</span> */}
-
         <Stack
           type="row"
-          gap={0}
+          gap={2}
           css={{
             gtc: "$$gridTracks",
+            px: "$1",
             span: {
               textTransform: "uppercase",
               fontSize: "$1",
               letterSpacing: "0.5px",
-              py: "$1",
-              borderBottom: "2px solid $slate6",
             },
             "@bp1": {
-              gtc: "3fr 1fr",
+              gtc: "$$gridTracksSmall",
             },
           }}
         >
@@ -49,12 +94,18 @@ function MusicPage() {
 
           <AlbumColumn>Album</AlbumColumn>
 
-          <span>Played at</span>
+          <AlbumColumn>Length</AlbumColumn>
+
+          <span>Played</span>
         </Stack>
 
-        {data &&
-          data?.recentTracks.map((track) => {
-            return (
+        <Divider />
+
+        {loading ? (
+          <SkeletonTrack />
+        ) : (
+          <>
+            {track && (
               <Stack
                 type="row"
                 gap={2}
@@ -70,7 +121,7 @@ function MusicPage() {
                     background: "$gray5",
                   },
                   "@bp1": {
-                    gtc: "3fr 1fr",
+                    gtc: "$$gridTracksSmall",
                   },
                 }}
               >
@@ -87,34 +138,46 @@ function MusicPage() {
                   </SongInfoContainer>
                 </Stack>
                 <Album>{track.album}</Album>
-                <TimePlayed>
-                  {timeAgo.format(new Date(track.playedAt))}
-                </TimePlayed>
-              </Stack>
-            );
-          })}
-      </Container>
 
-      {/* <table>
-        <thead>
-          <tr>
-            <th scope="col" style={{ textAlign: "left", width: "40%" }}>
-              Title
-            </th>
-            <th scope="col" style={{ textAlign: "left", width: "40%" }}>
-              Album
-            </th>
-            <th scope="col" style={{ textAlign: "left", width: "20%" }}>
-              Played at
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {data &&
-            data?.recentTracks.map((track) => {
-              return (
-                <tr>
-                  <td width="40$">
+                <Album>6:66</Album>
+
+                <NowPlayingIcon />
+              </Stack>
+            )}
+          </>
+        )}
+
+        {isLoading ? (
+          <>
+            {Array.from({ length: 20 }).map((_, index) => {
+              return <SkeletonTrack key={index} />;
+            })}
+          </>
+        ) : (
+          <>
+            {data &&
+              data?.recentTracks.map((track) => {
+                return (
+                  <Stack
+                    key={track.id}
+                    type="row"
+                    gap={2}
+                    css={{
+                      gtc: "$$gridTracks",
+                      background: "none",
+                      transition: "background 300ms ease",
+                      cursor: "pointer",
+                      px: "$1",
+                      py: "$1",
+                      br: "8px",
+                      "&:hover": {
+                        background: "$gray5",
+                      },
+                      "@bp1": {
+                        gtc: "$$gridTracksSmall",
+                      },
+                    }}
+                  >
                     <Stack type="row" gap={1}>
                       <AlbumArt>
                         <img src={track.albumImageUrl} alt="album" />
@@ -127,18 +190,17 @@ function MusicPage() {
                         <Artist>{track.artist}</Artist>
                       </SongInfoContainer>
                     </Stack>
-                  </td>
-                  <td width="40%">
-                    <Artist>{track.album}</Artist>
-                  </td>
-                  <td width="20%">
-                    <Artist>{timeAgo.format(new Date(track.playedAt))}</Artist>
-                  </td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </table> */}
+                    <Album>{track.album}</Album>
+                    <Album>{track.duration}</Album>
+                    <TimePlayed>
+                      {timeAgo.format(new Date(track.playedAt))}
+                    </TimePlayed>
+                  </Stack>
+                );
+              })}
+          </>
+        )}
+      </Container>
     </>
   );
 }
@@ -146,10 +208,12 @@ function MusicPage() {
 export default MusicPage;
 
 const Container = styled(Stack, {
-  $$gridTracks: "3fr 3fr 1.5fr",
-  justifySelf: "stretch",
+  $$gridTracks: "4fr 3fr 1fr 1fr",
+  $$gridTracksSmall: "4fr 1fr",
   gtc: "minmax(0, 1fr)",
   py: "$4",
+  maxWidth: "750px",
+  justifySelf: "center",
 });
 
 const SongInfoContainer = styled(Stack, {});
@@ -192,6 +256,7 @@ const TimePlayed = styled("span", {
   WebkitBoxOrient: "vertical",
   WebkitLineClamp: "1",
   overflow: "hidden",
+  textTransform: "capitalize",
 });
 
 const PlayIconContainer = styled("div", {
@@ -203,5 +268,78 @@ const PlayIconContainer = styled("div", {
 const AlbumColumn = styled("span", {
   "@bp1": {
     display: "none",
+  },
+});
+
+const Divider = styled("div", {
+  width: "100%",
+  height: "3px",
+  bg: "$slate6",
+  br: "9999px",
+  // my: "-2rem",
+});
+
+const AlbumArtSkeleton = styled("div", {
+  size: "45px",
+  br: "5px",
+  background: "$slate8",
+});
+
+const TextSkeleton = styled("span", {
+  width: "7rem",
+  height: "0.9rem",
+  br: "5px",
+  background: "$slate8",
+
+  variants: {
+    size: {
+      1: {
+        width: "1rem",
+      },
+      2: {
+        width: "2rem",
+      },
+      3: {
+        width: "3rem",
+      },
+      4: {
+        width: "4rem",
+      },
+      5: {
+        width: "5rem",
+      },
+      6: {
+        width: "6rem",
+      },
+      7: {
+        width: "7rem",
+      },
+      8: {
+        width: "8rem",
+      },
+      9: {
+        width: "9rem",
+      },
+    },
+  },
+
+  defaultVariant: {
+    size: 7,
+  },
+});
+
+const HiddenTextSkeleton = styled(TextSkeleton, {
+  "@bp1": {
+    display: "none",
+  },
+});
+
+const IconContainer = styled("div", {
+  size: 24,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  svg: {
+    size: "100%",
   },
 });

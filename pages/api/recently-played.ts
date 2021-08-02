@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getRecentlyPlayed } from "lib/spotify";
+import { millisToMinutesAndSeconds } from "utils";
 
 export default async (_: NextApiRequest, res: NextApiResponse) => {
   const response = await getRecentlyPlayed();
@@ -10,6 +11,7 @@ export default async (_: NextApiRequest, res: NextApiResponse) => {
     const { track, played_at } = item;
 
     return {
+      id: new Date(played_at).getTime(),
       artist: track.artists.map((artist) => artist.name).join(", "),
       // @ts-ignore
       album: track.album.name,
@@ -19,6 +21,7 @@ export default async (_: NextApiRequest, res: NextApiResponse) => {
       albumImageUrl: track.album.images[0].url,
       playedAt: played_at,
       isPlaying: false,
+      duration: millisToMinutesAndSeconds(track.duration_ms),
     };
   });
 

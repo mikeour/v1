@@ -10,7 +10,7 @@ export default function AboutPage() {
       </Head>
       <Stack type="column" gap={1} css={{ py: "$2" }}>
         <Stack type="column" gap={1} css={{ py: "$4" }}>
-          <h1>About.</h1>
+          <h1>About</h1>
           <p>
             Hi, my name's Michael and I'm a design-focused web developer based
             out of New York.

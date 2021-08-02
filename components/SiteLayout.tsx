@@ -1,6 +1,7 @@
 import { styled } from "styles";
 import Navigation from "components/Navigation";
 import Footer from "components/Footer";
+import DreamyGradient from "components/DreamyGradient";
 
 interface SiteLayoutProps {
   children: React.ReactNode;
@@ -23,7 +24,7 @@ const Wrapper = styled("div", {
   gridTemplateAreas: '"nav nav nav" ". content ." "foot foot foot"',
   gtr: "auto 1fr auto",
   gtc: "auto 1fr auto",
-  gridGap: "4rem 2rem",
+  gridGap: "$4 $2",
   alignItems: "center",
   justifyContent: "center",
   width: "100%",

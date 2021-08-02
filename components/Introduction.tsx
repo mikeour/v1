@@ -24,6 +24,11 @@ function Introduction({ blogposts }: IntroductionProps) {
           <HeadlineEmphasized>Michael Roeslein</HeadlineEmphasized>
         </Headline>
         <p>I’m a design-focused web developer living in Brooklyn, NY.</p>
+        {/* <p>
+          I love listening to music, long walks on the beach, and contributing
+          to open source. It doesnt' matter what time of day — if there is an
+          opportunity to become a better software engineer I will pursue it.
+        </p> */}
       </Stack>
 
       <Blogposts blogposts={blogposts} />
@@ -34,7 +39,7 @@ function Introduction({ blogposts }: IntroductionProps) {
 export default Introduction;
 
 const Headline = styled("p", {
-  fontSize: "clamp(3.9rem, 7vw, 5.5rem)",
+  fontSize: "clamp(2.5rem, 7vw, 5.5rem)",
   fontWeight: "bold",
   letterSpacing: "-1px",
   lineHeight: "1",
