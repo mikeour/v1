@@ -1,15 +1,26 @@
 import { styled } from "styles";
+import Head from "components/Head";
 import Navigation from "components/Navigation";
 import Footer from "components/Footer";
 // import DreamyGradient from "components/DreamyGradient";
 
 interface SiteLayoutProps {
+  title?: string;
+  description?: string;
+  image?: string;
   children: React.ReactNode;
 }
 
-export default function SiteLayout({ children }: SiteLayoutProps) {
+export default function PageLayout({
+  children,
+  title = "mikeour.io",
+  description = "Hey, I'm Michael. I’m a design-focused web developer living in Brooklyn, NY.",
+  image = "",
+}: SiteLayoutProps) {
   return (
     <Wrapper>
+      <Head title={title} description={description} image={image} />
+
       <Navigation />
 
       <Content>{children}</Content>

@@ -1,4 +1,4 @@
-import Head from "next/head";
+import Page from "components/PageLayout";
 import { getAllBlogposts } from "lib/blogposts";
 import type { Blogpost } from "lib/blogposts";
 import { styled } from "styles";
@@ -11,10 +11,7 @@ interface BlogProps {
 
 export default function Blog({ blogposts }: BlogProps) {
   return (
-    <>
-      <Head>
-        <title key="title">Blog</title>
-      </Head>
+    <Page title="Blog">
       <Stack type="column" gap={1} css={{ py: "$2" }}>
         <Stack type="column" gap={1} css={{ py: "$4" }}>
           <h1>Blog</h1>
@@ -28,7 +25,7 @@ export default function Blog({ blogposts }: BlogProps) {
 
         <Blogposts blogposts={blogposts} />
       </Stack>
-    </>
+    </Page>
   );
 }
 

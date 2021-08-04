@@ -1,4 +1,4 @@
-import Head from "next/head";
+import Page from "components/PageLayout";
 import { getAllBlogposts, getTagPathsFromBlogposts } from "lib/blogposts";
 import type { Blogpost } from "lib/blogposts";
 import { styled } from "styles";
@@ -13,10 +13,7 @@ interface TagPageProps {
 
 function TagPage({ blogposts, tag }: TagPageProps) {
   return (
-    <>
-      <Head>
-        <title key="title">{tag} Posts</title>
-      </Head>
+    <Page title={`${tag} Posts`}>
       <Stack type="column" gap={1} css={{ py: "$2" }}>
         <Stack type="column" gap={1} css={{ py: "$4" }}>
           <h1>{tag}</h1>
@@ -25,7 +22,7 @@ function TagPage({ blogposts, tag }: TagPageProps) {
 
         <Blogposts blogposts={blogposts} />
       </Stack>
-    </>
+    </Page>
   );
 }
 

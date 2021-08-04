@@ -1,4 +1,4 @@
-import Head from "next/head";
+import Page from "components/PageLayout";
 import Introduction from "components/Introduction";
 import { getAllBlogposts } from "lib/blogposts";
 import type { Blogpost } from "lib/blogposts";
@@ -9,12 +9,9 @@ interface HomeProps {
 
 export default function Home({ blogposts }: HomeProps) {
   return (
-    <>
-      <Head>
-        <title key="title">mikeour.io</title>
-      </Head>
+    <Page>
       <Introduction blogposts={blogposts} />
-    </>
+    </Page>
   );
 }
 

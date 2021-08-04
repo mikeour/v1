@@ -13,8 +13,12 @@ function MovieTrack({ film }: { film: Film }) {
       </MoviePoster>
 
       <MovieInformation type="column" gap={1}>
-        <MovieDetails type="row" gap={1}>
-          <Stack type="row" gap={1}>
+        <MovieDetails type="row" gap={2}>
+          <Stack
+            type="row"
+            gap={1}
+            css={{ "@bp1": { gridAutoFlow: "row !important" } }}
+          >
             <MovieTitle>{film.title}</MovieTitle>
 
             <Stack type="row" gap={1}>
@@ -51,6 +55,10 @@ export const MovieTrackContainer = styled(Stack, {
   "&:hover": {
     bg: "$slate4",
   },
+
+  "@bp1": {
+    gtc: "minmax(0, 1fr)",
+  },
 });
 
 export const MoviePoster = styled("div", {
@@ -64,6 +72,10 @@ export const MoviePoster = styled("div", {
   br: "5px",
   overflow: "hidden",
   position: "relative",
+
+  "@bp1": {
+    display: "none",
+  },
 
   img: {
     size: "100%",
@@ -132,7 +144,7 @@ const MovieReview = styled("span", {
   // alignSelf: "flex-start",
   px: "$1",
   // mx: "$2",
-  py: "$1",
+  // py: "$1",
   borderLeft: "3px solid $indigo6",
 });
 
@@ -152,8 +164,8 @@ export const MovieDetails = styled(Stack, {
   alignItems: "baseline",
   justifyContent: "space-between",
 
-  "@bp1": {
-    gridGap: "0.2rem !important",
-    gridAutoFlow: "row !important",
-  },
+  // "@bp1": {
+  //   gridGap: "0.2rem !important",
+  //   gridAutoFlow: "row !important",
+  // },
 });

@@ -1,13 +1,10 @@
-import Head from "next/head";
+import Page from "components/PageLayout";
 import { Stack } from "components/shared";
 import { styled } from "styles";
 
 export default function AboutPage() {
   return (
-    <>
-      <Head>
-        <title key="title">About</title>
-      </Head>
+    <Page title="About">
       <Stack type="column" gap={1} css={{ py: "$2" }}>
         <Stack type="column" gap={1} css={{ py: "$4" }}>
           <h1>About</h1>
@@ -17,6 +14,6 @@ export default function AboutPage() {
           </p>
         </Stack>
       </Stack>
-    </>
+    </Page>
   );
 }

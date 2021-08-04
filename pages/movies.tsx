@@ -1,4 +1,4 @@
-import Head from "next/head";
+import Page from "components/PageLayout";
 import { styled } from "styles";
 import MovieTrack from "components/MovieTrack";
 import SkeletonMovieTrack from "components/MovieTrack.skeleton";
@@ -12,10 +12,7 @@ function MoviePage() {
   const { data, isLoading } = useRecentlyWatched();
 
   return (
-    <>
-      <Head>
-        <title key="title">Movies</title>
-      </Head>
+    <Page title="Movies">
       <Stack type="column" gap={1} css={{ py: "$2" }}>
         <Stack type="column" gap={1} css={{ py: "$4" }}>
           <Stack type="row" gap={2} css={{ alignItems: "baseline" }}>
@@ -59,7 +56,7 @@ function MoviePage() {
               );
             })}
       </Content>
-    </>
+    </Page>
   );
 }
 

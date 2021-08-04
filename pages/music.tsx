@@ -1,4 +1,4 @@
-import Head from "next/head";
+import Page from "components/PageLayout";
 import useRecentlyPlayed from "hooks/useRecentlyPlayed";
 import { styled } from "styles";
 import MusicTrack from "components/MusicTrack";
@@ -14,10 +14,7 @@ function MusicPage() {
   const { track, loading } = useNowPlaying({ useFallback: false });
 
   return (
-    <>
-      <Head>
-        <title key="title">Music</title>
-      </Head>
+    <Page title="Music">
       <Stack type="column" gap={1} css={{ py: "$2" }}>
         <Stack type="column" gap={1} css={{ py: "$4" }}>
           <Stack type="row" gap={2} css={{ alignItems: "baseline" }}>
@@ -87,7 +84,7 @@ function MusicPage() {
               <MusicTrack key={track.id} track={track} />
             ))}
       </Container>
-    </>
+    </Page>
   );
 }
 

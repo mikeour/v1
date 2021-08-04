@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Head from "next/head";
 import { MDXRemote } from "next-mdx-remote";
+import Page from "components/PageLayout";
 import BlogLayout from "components/BlogLayout";
 import Header from "components/Header";
 import components from "components/mdx";
@@ -15,10 +15,7 @@ export default function Blogpost({ blogpost, slug }: any) {
   const headings = getHeadings(content);
 
   return (
-    <>
-      <Head>
-        <title key="title">{frontmatter.title}</title>
-      </Head>
+    <Page title={`${frontmatter.title}`}>
       <BlogLayout>
         <Header frontmatter={frontmatter} />
         <ContentContainer>
@@ -93,7 +90,7 @@ export default function Blogpost({ blogpost, slug }: any) {
           </ExtraLink>
         </ExtraLinksContainer>
       </BlogLayout>
-    </>
+    </Page>
   );
 }
 
