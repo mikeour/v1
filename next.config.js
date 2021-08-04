@@ -1,5 +1,8 @@
 module.exports = {
   reactStrictMode: true,
+  images: {
+    domains: ["a.ltrbxd.com", "i.scdn.co"],
+  },
   webpack: (config, { dev, isServer }) => {
     // Swap React with Preact only in client production build
     if (!dev && !isServer) {
@@ -11,10 +14,5 @@ module.exports = {
     }
 
     return config;
-  },
-  eslint: {
-    // Warning: Dangerously allow production builds to successfully complete even if
-    // your project has ESLint errors.
-    ignoreDuringBuilds: true,
   },
 };

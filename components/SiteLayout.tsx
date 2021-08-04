@@ -1,7 +1,7 @@
 import { styled } from "styles";
 import Navigation from "components/Navigation";
 import Footer from "components/Footer";
-import DreamyGradient from "components/DreamyGradient";
+// import DreamyGradient from "components/DreamyGradient";
 
 interface SiteLayoutProps {
   children: React.ReactNode;
@@ -41,4 +41,5 @@ const Content = styled("main", {
   placeItems: "center",
   placeContent: "center",
   maxWidth: "$content",
+  pb: "$4",
 });

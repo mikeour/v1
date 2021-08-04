@@ -6,14 +6,21 @@ export default class Document extends NextDocument {
     return (
       <Html lang="en">
         <Head>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
-            href="https://fonts.googleapis.com/css2?family=Karla"
-            rel="stylesheet"
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossOrigin="true"
           />
           <link
-            href="https://fonts.googleapis.com/css2?family=Source+Code+Pro"
+            href="https://fonts.googleapis.com/css2?family=Karla&display=swap"
             rel="stylesheet"
-          ></link>
+          />
+
+          <link
+            href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap"
+            rel="stylesheet"
+          />
           <style
             id="stitches"
             dangerouslySetInnerHTML={{ __html: getCssString() }}

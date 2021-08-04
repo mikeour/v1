@@ -33,7 +33,7 @@ export function handleTag(tag: string) {
   return slugify(tag.toLowerCase());
 }
 
-export function getFormattedDate(date: string): string {
+export function getFormattedDate(date: number | string): string {
   const options: Intl.DateTimeFormatOptions = {
     month: "long",
     day: "numeric",

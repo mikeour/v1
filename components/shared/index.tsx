@@ -150,6 +150,12 @@ export const ActionLinkGhost = styled(ActionLink, {
   background: "none",
 });
 
+export const glisten = keyframes({
+  "0%": { transform: "translateX(-100%)" },
+  "60%": { transform: "translateX(100%)" },
+  "100%": { transform: "translateX(100%)" },
+});
+
 export const AlbumArt = styled("div", {
   display: "flex",
   justifyContent: "center",
@@ -157,9 +163,85 @@ export const AlbumArt = styled("div", {
   size: "45px",
   br: "5px",
   overflow: "hidden",
+  position: "relative",
 
   img: {
     size: "100%",
     objectFit: "cover",
+  },
+
+  variants: {
+    skeleton: {
+      true: {
+        bg: "$slate7",
+
+        "&::after": {
+          position: "absolute",
+          content: "",
+          inset: 0,
+          linearGradient:
+            "90deg, transparent, rgba(0, 0, 0, 0.09), transparent",
+          transform: "translateX(-100%)",
+          animation: `${glisten} 1.6s linear 0.5s infinite`,
+        },
+      },
+    },
+  },
+});
+
+export const TextSkeleton = styled("span", {
+  width: "7rem",
+  height: "0.9rem",
+  br: "5px",
+  background: "$slate8",
+  overflow: "hidden",
+  position: "relative",
+
+  "&::after": {
+    position: "absolute",
+    content: "",
+    inset: 0,
+    linearGradient: "90deg, transparent, rgba(0, 0, 0, 0.09), transparent",
+    transform: "translateX(-100%)",
+    animation: `${glisten} 1.6s linear 0.5s infinite`,
+  },
+
+  variants: {
+    size: {
+      0: {
+        width: "0rem",
+      },
+      1: {
+        width: "1rem",
+      },
+      2: {
+        width: "2rem",
+      },
+      3: {
+        width: "3rem",
+      },
+      4: {
+        width: "4rem",
+      },
+      5: {
+        width: "5rem",
+      },
+      6: {
+        width: "6rem",
+      },
+      7: {
+        width: "7rem",
+      },
+      8: {
+        width: "8rem",
+      },
+      9: {
+        width: "9rem",
+      },
+    },
+  },
+
+  defaultVariant: {
+    size: 7,
   },
 });

@@ -113,13 +113,22 @@ export const Mail = () => (
 export const ExternalLink = () => (
   <svg
     viewBox="0 0 24 24"
-    role="img"
-    focusable="false"
     xmlns="http://www.w3.org/2000/svg"
     fill="currentColor"
   >
     <path d="M20 11a1 1 0 00-1 1v6a1 1 0 01-1 1H6a1 1 0 01-1-1V6a1 1 0 011-1h6a1 1 0 000-2H6a3 3 0 00-3 3v12a3 3 0 003 3h12a3 3 0 003-3v-6a1 1 0 00-1-1z"></path>
     <path d="M16 5h1.58l-6.29 6.28a1 1 0 000 1.42 1 1 0 001.42 0L19 6.42V8a1 1 0 001 1 1 1 0 001-1V4a1 1 0 00-1-1h-4a1 1 0 000 2z"></path>
+  </svg>
+);
+
+export const TimePlayed = () => (
+  <svg
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+  >
+    <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path>
+    <path d="M13 7h-2v6h6v-2h-4z"></path>
   </svg>
 );
 

@@ -17,7 +17,7 @@ export default function Blog({ blogposts }: BlogProps) {
       </Head>
       <Stack type="column" gap={1} css={{ py: "$2" }}>
         <Stack type="column" gap={1} css={{ py: "$4" }}>
-          <h1>Welcome to the blog.</h1>
+          <h1>Blog</h1>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi
             aspernatur adipisci iusto dicta esse perferendis id, ipsa itaque

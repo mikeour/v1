@@ -1,16 +1,6 @@
 import { useQuery } from "react-query";
 import fetcher from "lib/fetcher";
-
-interface Film {
-  id: number;
-  watched: string;
-  title: string;
-  year: string;
-  poster: string;
-  rating: number;
-  review: string;
-  url: string;
-}
+import { Film } from "types";
 
 interface RecentlyWatchedData {
   films: Array<Film>;

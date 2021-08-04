@@ -1,5 +1,6 @@
 import { getNowPlaying } from "lib/spotify";
 import { NextApiRequest, NextApiResponse } from "next";
+import { millisToMinutesAndSeconds } from "utils";
 
 export default async (_: NextApiRequest, res: NextApiResponse) => {
   const response = await getNowPlaying();
@@ -14,24 +15,22 @@ export default async (_: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).json({ isPlaying: false });
   }
 
-  const isPlaying = song.is_playing;
-  const title = song.item.name;
-  // @ts-ignore
-  const artist = song.item.artists
-    .map((_artist: any) => _artist.name)
-    .join(", ");
-  // @ts-ignore
-  const album = song.item.album.name;
-  // @ts-ignore
-  const albumImageUrl = song.item.album.images[0].url;
-  const songUrl = song.item.external_urls.spotify;
+  const { timestamp, item, is_playing } = song;
 
-  return res.status(200).json({
-    album,
-    albumImageUrl,
-    artist,
-    isPlaying,
-    songUrl,
-    title,
-  });
+  const track = {
+    id: new Date(timestamp).getTime(),
+    // @ts-ignore
+    artist: item.artists.map((artist) => artist.name).join(", "),
+    // @ts-ignore
+    album: item.album.name,
+    songUrl: item.external_urls.spotify,
+    title: item.name,
+    // @ts-ignore
+    albumImageUrl: item.album.images[0].url,
+    playedAt: timestamp,
+    isPlaying: is_playing,
+    duration: millisToMinutesAndSeconds(item.duration_ms),
+  };
+
+  return res.status(200).json(track);
 };

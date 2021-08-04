@@ -2,11 +2,12 @@
 import letterboxd from "letterboxd";
 import { getFormattedDate } from "utils";
 import { NextApiRequest, NextApiResponse } from "next";
+import { LetterboxdFilm } from "types";
 
 export default async (_: NextApiRequest, res: NextApiResponse) => {
   const response = await letterboxd("mikeour");
 
-  const films = response.map((film: any) => ({
+  const films = response.map((film: LetterboxdFilm) => ({
     id: new Date(film.date.watched).getTime(),
     watched: getFormattedDate(film.date.watched),
     title: film.film.title,
