@@ -13,9 +13,9 @@ interface SiteLayoutProps {
 
 export default function PageLayout({
   children,
-  title = "mikeour.io",
-  description = "Hey, I'm Michael. I’m a design-focused web developer living in Brooklyn, NY.",
-  image = "",
+  title,
+  description,
+  image,
 }: SiteLayoutProps) {
   return (
     <Wrapper>

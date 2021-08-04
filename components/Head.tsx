@@ -1,7 +1,5 @@
 import NextHead from "next/head";
 
-const defaultOgImage = "https://mikeour.io/images/og-image.png";
-
 interface HeadProps {
   title?: string;
   description?: string;
@@ -9,10 +7,15 @@ interface HeadProps {
   children?: React.ReactNode;
 }
 
+const defaultTitle = "mikeour.io";
+const defaultDescription =
+  "Hey, I'm Michael Roeslein. A design-minded web developer from Brooklyn, NV.";
+const defaultImage = "https://mikeour.io/images/og-image.png";
+
 function Head({
-  title = "Paco Coursey",
-  description = "Hi, I'm Paco. Frontend developer and designer.",
-  image = defaultOgImage,
+  title = defaultTitle,
+  description = defaultDescription,
+  image = defaultImage,
   children,
 }: HeadProps) {
   return (
