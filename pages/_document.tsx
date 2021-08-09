@@ -2,6 +2,9 @@ import NextDocument, { Html, Head, Main, NextScript } from "next/document";
 import { getCssString } from "styles";
 
 export default class Document extends NextDocument {
+  faviconSrc =
+    process.env.NODE_ENV === "production" ? "/favicon.png" : "/favicon-dev.png";
+
   render() {
     return (
       <Html lang="en">
@@ -25,6 +28,7 @@ export default class Document extends NextDocument {
             id="stitches"
             dangerouslySetInnerHTML={{ __html: getCssString() }}
           />
+          <link rel="icon" type="image/png" href={`${this.faviconSrc}?v=2`} />
         </Head>
         <body>
           <Main />
