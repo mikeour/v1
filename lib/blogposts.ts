@@ -94,17 +94,15 @@ export function getAllBlogposts() {
 export function getTagPathsFromBlogposts(
   blogposts: Array<Blogpost>
 ): Array<{ params: { tag: string } }> {
-  const tags = [];
+  const tags = new Set<string>();
 
   for (const blogpost of blogposts) {
     for (const tag of blogpost.tags) {
-      if (tags.includes(tag) === false) {
-        tags.push(tag);
-      }
+      tags.add(tag);
     }
   }
 
-  const paths = tags.map((tag: string) => {
+  const paths = [...tags].map((tag) => {
     return {
       params: {
         tag: handleTag(tag),

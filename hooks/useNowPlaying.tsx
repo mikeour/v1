@@ -7,12 +7,10 @@ interface RecentlyPlayedData {
 }
 
 interface NowPlayingOptions {
-  useFallback?: boolean;
+  fallback?: boolean;
 }
 
-function useNowPlaying(
-  { useFallback }: NowPlayingOptions = { useFallback: true }
-) {
+function useNowPlaying({ fallback }: NowPlayingOptions = { fallback: true }) {
   const { data: currentTrack, isLoading: isLoadingNowPlaying } = useQuery(
     "now-playing",
     () => fetcher<TrackData>("/api/now-playing"),
@@ -25,15 +23,15 @@ function useNowPlaying(
       { enabled: currentTrack?.isPlaying === false }
     );
 
-  const track = currentTrack?.isPlaying
+  const nowPlayingTrack = currentTrack?.isPlaying
     ? currentTrack
-    : useFallback == true
+    : fallback == true
     ? recentlyPlayedTrack?.recentTrack ?? null
     : null;
 
   return {
-    track,
-    loading: isLoadingNowPlaying || isLoadingRecentlyPlayed,
+    nowPlayingTrack,
+    isLoading: isLoadingNowPlaying || isLoadingRecentlyPlayed,
   };
 }
 

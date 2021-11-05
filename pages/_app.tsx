@@ -7,10 +7,11 @@ import { darkTheme } from "styles";
 import createGlobalStyles from "styles/global";
 import type { AppProps } from "next/app";
 
+createGlobalStyles();
+
 function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
 
-  createGlobalStyles();
   useProgress();
 
   return (

@@ -35,7 +35,7 @@ const Wrapper = styled("div", {
   gridTemplateAreas: '"nav nav nav" ". content ." "foot foot foot"',
   gtr: "auto 1fr auto",
   gtc: "auto 1fr auto",
-  gridGap: "$4 $2",
+  gridGap: "$4 1.25rem",
   alignItems: "center",
   justifyContent: "center",
   width: "100%",
@@ -49,8 +49,7 @@ const Content = styled("main", {
   color: "$gray12",
   display: "grid",
   justifySelf: "center",
-  placeItems: "center",
-  placeContent: "center",
+  alignContent: "center",
   maxWidth: "$content",
   pb: "$4",
 });

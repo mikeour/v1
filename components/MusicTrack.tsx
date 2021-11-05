@@ -1,20 +1,41 @@
 import Image from "next/image";
 import { styled } from "styles";
 import { Stack, AlbumArt } from "components/shared";
-import { NowPlayingIcon } from "components/icons";
+import { NowPlayingIcon, Play, Pause } from "components/icons";
 import timeAgo from "lib/timeago";
 import { TrackData } from "types";
 
-function MusicTrack({ track }: { track: TrackData }) {
+function MusicTrack({
+  track,
+  isPlaying,
+  updateTrack,
+}: {
+  track: TrackData;
+  isPlaying: boolean;
+  updateTrack: (track: TrackData) => void;
+}) {
   return (
-    <MusicTrackContainer key={track.id} type="row" gap={2}>
+    <MusicTrackContainer
+      key={track.id}
+      type="row"
+      gap={2}
+      playing={isPlaying}
+      onClick={() => {
+        updateTrack(track);
+      }}
+    >
       <Stack type="row" gap={1}>
         <AlbumArt>
           <Image
             src={track.albumImageUrl}
             alt={`${track.artist} album art`}
             layout="fill"
+            priority
           />
+
+          <IconContainer className="play">
+            {isPlaying ? <Pause /> : <Play />}
+          </IconContainer>
         </AlbumArt>
 
         <SongInfoContainer type="column" gap={0}>
@@ -22,6 +43,7 @@ function MusicTrack({ track }: { track: TrackData }) {
           <Artist>{track.artist}</Artist>
         </SongInfoContainer>
       </Stack>
+
       <Album>{track.album}</Album>
       <Album>{track.duration}</Album>
 
@@ -45,12 +67,41 @@ export const MusicTrackContainer = styled(Stack, {
   transition: "background 300ms ease",
   cursor: "pointer",
 
+  ".play": {
+    opacity: 0,
+    bg: "none",
+    transition: "background 300ms ease, opacity 300ms ease",
+  },
+
   "&:hover": {
-    background: "$gray5",
+    bg: "$gray5",
+
+    ".play": {
+      opacity: 1,
+      bg: "$blackA11",
+    },
   },
 
   "@bp1": {
     gtc: "$$gridTracksSmall",
+  },
+
+  variants: {
+    playing: {
+      true: {
+        bg: "$indigo9",
+        "p, span": {
+          color: "white",
+        },
+        ".play": {
+          opacity: 1,
+          bg: "$blackA11",
+        },
+        "&:hover": {
+          bg: "$indigo10",
+        },
+      },
+    },
   },
 });
 
@@ -95,4 +146,24 @@ const Time = styled("span", {
   WebkitLineClamp: "1",
   overflow: "hidden",
   textTransform: "capitalize",
+});
+
+const IconContainer = styled("div", {
+  position: "absolute",
+  inset: 0,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  color: "#ffffff",
+  zIndex: 2,
+  p: "$1",
+
+  svg: {
+    size: "100%",
+    display: "block",
+  },
+});
+
+const Bar = styled(Stack, {
+  gridArea: "1 / 2 / 2 / -1",
 });

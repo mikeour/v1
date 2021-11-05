@@ -132,6 +132,51 @@ export const TimePlayed = () => (
   </svg>
 );
 
+export const Refresh = () => (
+  <svg
+    viewBox="0 0 512 512"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+  >
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeMiterlimit="10"
+      strokeWidth="32"
+      d="M320 146s24.36-12-64-12a160 160 0 10160 160"
+    ></path>
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="32"
+      d="M256 58l80 80-80 80"
+    ></path>
+  </svg>
+);
+
+export const Play = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    viewBox="0 0 48 48"
+  >
+    <path d="M16.75 8.41l24.42 12.7a3.25 3.25 0 010 5.77l-24.42 12.7A3.25 3.25 0 0112 36.7V11.3a3.25 3.25 0 014.55-2.98l.2.1z"></path>
+  </svg>
+);
+
+export const Pause = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    viewBox="0 0 48 48"
+  >
+    <path d="M17.75 7C19.55 7 21 8.46 21 10.25v27.5c0 1.8-1.46 3.25-3.25 3.25h-5.5A3.25 3.25 0 019 37.75v-27.5C9 8.45 10.46 7 12.25 7h5.5zm18 0C37.55 7 39 8.46 39 10.25v27.5c0 1.8-1.46 3.25-3.25 3.25h-5.5A3.25 3.25 0 0127 37.75v-27.5C27 8.45 28.46 7 30.25 7h5.5z"></path>
+  </svg>
+);
+
 export function Letterboxd() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
@@ -203,6 +248,7 @@ const NowPlayingContainer = styled("div", {
   display: "flex",
   justifyContent: "space-between",
   alignItems: "flex-end",
+  gap: "1px",
 
   ".bar-1": {
     height: "60%",
@@ -230,7 +276,7 @@ const UpAndDown = keyframes({
 const NowPlayingBar = styled("span", {
   display: "inline-block",
   background: "$mediaGreen",
-  width: "30%",
+  flexBasis: "33%",
   height: "100%",
   animation: `${UpAndDown} 1.3s ease infinite alternate`,
 });

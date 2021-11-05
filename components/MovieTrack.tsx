@@ -7,35 +7,50 @@ import { Film } from "types";
 
 function MovieTrack({ film }: { film: Film }) {
   return (
-    <MovieTrackContainer key={film.id} type="row" gap={2}>
+    <MovieTrackContainer key={film.id} type="row" gap={1}>
       <MoviePoster>
         <Image src={film.poster} alt={`${film.title} poster`} layout="fill" />
       </MoviePoster>
 
-      <MovieInformation type="column" gap={1}>
-        <MovieDetails type="row" gap={2}>
+      <MovieInformation type="column" gap={2}>
+        <MovieDetails
+          type="row"
+          gap={2}
+          css={{ "@bp1": { gridAutoFlow: "row !important" } }}
+        >
           <Stack
-            type="row"
+            type="column"
             gap={1}
             css={{ "@bp1": { gridAutoFlow: "row !important" } }}
           >
-            <MovieTitle>{film.title}</MovieTitle>
-
-            <Stack type="row" gap={1}>
+            <Stack
+              type="row"
+              gap={2}
+              css={{
+                alignItems: "baseline",
+                "@bp1": { gridAutoFlow: "row", gridGap: "$1" },
+              }}
+            >
+              <MovieTitle>{film.title}</MovieTitle>
+              {/* <p>•</p> */}
               <MovieYear>{film.year}</MovieYear>
-
-              <MovieRating>{film.rating}</MovieRating>
             </Stack>
           </Stack>
 
-          <ExternalIconContainer>
+          <Stack type="row" gap={2}>
+            <MovieRating>{film.rating}</MovieRating>
+            {/* <p>•</p> */}
+            <MovieWatched>
+              {timeAgo.format(new Date(film.watched))}
+            </MovieWatched>
+          </Stack>
+
+          {/* <ExternalIconContainer>
             <ExternalLink />
-          </ExternalIconContainer>
+          </ExternalIconContainer> */}
         </MovieDetails>
 
         <MovieReview>{film.review}</MovieReview>
-
-        <MovieWatched>{timeAgo.format(new Date(film.watched))}</MovieWatched>
       </MovieInformation>
     </MovieTrackContainer>
   );
@@ -44,25 +59,26 @@ function MovieTrack({ film }: { film: Film }) {
 export default MovieTrack;
 
 export const MovieTrackContainer = styled(Stack, {
-  gtc: "auto 1fr",
-  p: "clamp($2, 3vw, $3)",
+  gtc: "auto minmax(0, 1fr)",
+  p: "$1",
   br: "8px",
   bg: "none",
-  border: "2px solid $slate4",
+
+  // borderTop: "3px solid $slate5",
   transition: "background 300ms ease-in-out",
-  cursor: "pointer",
+  // cursor: "pointer",
 
   "&:hover": {
-    bg: "$slate4",
+    bg: "$slate5",
   },
 
   "@bp1": {
-    gtc: "minmax(0, 1fr)",
+    // gtc: "minmax(0, 1fr)",
   },
 });
 
 export const MoviePoster = styled("div", {
-  $$posterSize: "clamp(125px, 25vw, 150px)",
+  $$posterSize: "clamp(115px, 25vw, 125px)",
 
   display: "flex",
   justifyContent: "center",
@@ -72,10 +88,6 @@ export const MoviePoster = styled("div", {
   br: "5px",
   overflow: "hidden",
   position: "relative",
-
-  "@bp1": {
-    display: "none",
-  },
 
   img: {
     size: "100%",
@@ -104,18 +116,22 @@ export const MoviePoster = styled("div", {
 export const MovieInformation = styled(Stack, {
   gtc: "minmax(0, 1fr)",
   gtr: "auto 1fr auto",
-  alignSelf: "stretch",
+  alignSelf: "center",
+  justifySelf: "stretch",
   p: "$1",
+  "@bp1": {
+    gtr: "minmax(0, 1fr)",
+  },
 });
 
 const MovieTitle = styled("span", {
   color: "$indigo12",
   fontSize: "$3",
-  fontWeight: "bold",
 });
 
 const MovieYear = styled("span", {
   fontSize: "$2",
+  // fontStyle: "italic",
   color: "$gray10",
 });
 
@@ -128,24 +144,32 @@ const MovieWatched = styled("span", {
   fontSize: "$2",
   color: "$gray11",
   lineHeight: 1,
+  // fontStyle: "italic",
   textAlign: "right",
-  fontStyle: "italic",
+
+  // "@bp1": {
+  //   textAlign: "left",
+  // },
 });
 
 const MovieReview = styled("span", {
-  fontStyle: "italic",
+  // fontStyle: "italic",
   fontSize: "$2",
   lineHeight: 1.5,
-  color: "$gray12",
-  display: "-webkit-box",
-  WebkitBoxOrient: "vertical",
-  WebkitLineClamp: "4",
-  overflow: "hidden",
-  // alignSelf: "flex-start",
-  px: "$1",
-  // mx: "$2",
+  color: "$slate11",
+  whiteSpace: "pre-line",
+  // maxWidth: "45ch",
+  // display: "-webkit-box",
+  // WebkitBoxOrient: "vertical",
+  // WebkitLineClamp: "4",
+  // overflow: "hidden",
+  // px: "$1",
   // py: "$1",
-  borderLeft: "3px solid $indigo6",
+  // borderLeft: "3px solid $indigo6",
+
+  "@bp1": {
+    display: "none",
+  },
 });
 
 const ExternalIconContainer = styled("div", {
@@ -158,14 +182,18 @@ const ExternalIconContainer = styled("div", {
   svg: {
     size: "100%",
   },
+
+  "@bp1": {
+    alignSelf: "flex-start",
+  },
 });
 
 export const MovieDetails = styled(Stack, {
   alignItems: "baseline",
   justifyContent: "space-between",
 
-  // "@bp1": {
-  //   gridGap: "0.2rem !important",
-  //   gridAutoFlow: "row !important",
-  // },
+  "@bp1": {
+    alignSelf: "stretch",
+    alignItems: "center",
+  },
 });

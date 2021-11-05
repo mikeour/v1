@@ -11,15 +11,14 @@ export function slugify(text: string) {
 
 export function getHeadings(source: string) {
   const headingLines = source.split("\n").filter((line) => {
-    return line.match(/^##*\s/);
+    return line.match(/^##\s/);
   });
 
   return headingLines.map((raw) => {
-    const text = raw.replace(/^##*\s/, "");
-    const level = raw.slice(0, 2) === "##" ? 2 : 1;
+    const text = raw.replace(/^##\s/, "");
     const link = slugify(text);
 
-    return { text, level, link };
+    return { text, link };
   });
 }
 
@@ -49,4 +48,8 @@ export function millisToMinutesAndSeconds(millis: number) {
   const minutes = Math.floor(millis / 60000);
   const seconds = ((millis % 60000) / 1000).toFixed(0);
   return minutes + ":" + (Number(seconds) < 10 ? "0" : "") + seconds;
+}
+
+export function getPlaceholderItems(amount: number) {
+  return Array.from({ length: amount }).map((_, index) => index);
 }

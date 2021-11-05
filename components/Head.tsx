@@ -40,7 +40,6 @@ function Head({
       <meta httpEquiv="Content-Language" content="en" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:site" content="@mikeour" />
-      <meta name="apple-mobile-web-app-title" content="Michael" />
       <meta name="author" content="Michael Roeslein" />
 
       {children}

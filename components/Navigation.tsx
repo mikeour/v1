@@ -69,7 +69,7 @@ const NavigationWrapper = styled("nav", {
 });
 
 const NavigationContainer = styled("div", {
-  p: "$2",
+  p: "1.25rem",
   margin: "0 auto",
   width: "100%",
   // Magic number to prevent layout shift when dark mode toggle is first painted to screen

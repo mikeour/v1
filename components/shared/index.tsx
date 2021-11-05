@@ -112,6 +112,7 @@ export function Link({
 const LinkText = styled("span", {
   color: "$indigo11",
   cursor: "pointer",
+  transition: "color 300ms ease",
   "&:hover": { color: "$indigo12" },
 
   variants: {
@@ -244,4 +245,11 @@ export const TextSkeleton = styled("span", {
   defaultVariant: {
     size: 7,
   },
+});
+
+export const Divider = styled("div", {
+  width: "100%",
+  height: "3px",
+  bg: "$slate6",
+  br: "9999px",
 });

@@ -1,24 +1,32 @@
-import Image from "next/image";
-import { MDXRemote } from "next-mdx-remote";
 import Page from "components/PageLayout";
+import BlogHeader from "components/BlogHeader";
 import BlogLayout from "components/BlogLayout";
-import Header from "components/Header";
 import components from "components/mdx";
 import { Stack, Link } from "components/shared";
+import Image from "next/image";
+import { MDXRemote } from "next-mdx-remote";
+import useRegisterBlogHit from "hooks/useRegisterBlogHit";
 import { getBlogpostBySlug, getAllBlogposts } from "lib/blogposts";
-import { styled } from "styles";
+import { getHitsBySlug } from "lib/supabase";
 import { getHeadings, handleTag } from "utils";
+import { styled } from "styles";
 import blogpostStyles from "styles/blogpost";
 
-export default function Blogpost({ blogpost, slug }: any) {
+export default function Blogpost({ blogpost, slug, hits }: any) {
   const { mdxSource, frontmatter, links, content } = blogpost;
   const headings = getHeadings(content);
 
+  useRegisterBlogHit(slug);
+
   return (
-    <Page title={`${frontmatter.title}`}>
+    <Page title={`${frontmatter.headline}`}>
       <BlogLayout>
-        <Header frontmatter={frontmatter} />
+        <BlogHeader frontmatter={frontmatter} hits={hits} />
         <ContentContainer>
+          <Content className={blogpostStyles()}>
+            <MDXRemote {...mdxSource} components={components} />
+          </Content>
+
           <ContentSidebar>
             <AuthorContainer type="row" gap={2}>
               <AvatarContainer>
@@ -27,6 +35,7 @@ export default function Blogpost({ blogpost, slug }: any) {
                   alt="Picture of the author"
                   width={44}
                   height={44}
+                  priority
                 />
               </AvatarContainer>
               <Stack type="column" gap={0}>
@@ -39,9 +48,9 @@ export default function Blogpost({ blogpost, slug }: any) {
                 <TableOfContentsHeader>Table of Contents</TableOfContentsHeader>
                 {headings.map((heading) => {
                   return (
-                    <TableOfContentsLink key={heading.text}>
-                      <a href={`#${heading.link}`}>{heading.text} </a>
-                    </TableOfContentsLink>
+                    <Link key={heading.text} href={`#${heading.link}`}>
+                      {heading.text}
+                    </Link>
                   );
                 })}
               </Stack>
@@ -57,9 +66,6 @@ export default function Blogpost({ blogpost, slug }: any) {
               </Stack>
             </StickyContent>
           </ContentSidebar>
-          <Content className={blogpostStyles()}>
-            <MDXRemote {...mdxSource} components={components} />
-          </Content>
         </ContentContainer>
 
         <ExtraLinksContainer type="row" gap={4}>
@@ -113,18 +119,19 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: any) {
   const blogpost = await getBlogpostBySlug(params.slug);
+  const hits = await getHitsBySlug(params.slug);
 
   return {
-    props: { blogpost, slug: params.slug },
+    props: { blogpost, slug: params.slug, hits },
+    revalidate: 10,
   };
 }
 
 const ContentContainer = styled("div", {
   display: "grid",
-  gtc: "1fr minmax(0, 2.5fr)",
-  gridGap: "2rem",
+  gtc: "2.5fr 1fr",
+  gridGap: "3rem",
   position: "relative",
-  "@initial": { gtc: "auto minmax(0, 1fr)" },
   "@bp1": { gtc: "minmax(0, 1fr)" },
 });
 
@@ -177,13 +184,14 @@ const Avatar = styled(Image, {
   m: "0",
 });
 
-const TableOfContentsHeader = styled("p", {
-  color: "$slate12",
-  fontWeight: "bold",
-  mb: "-0.75rem",
+const TableOfContentsHeader = styled("span", {
+  textTransform: "uppercase",
+  color: "$gray10",
+  fontSize: "$2",
+  letterSpacing: "1px",
 });
 
-const TableOfContentsLink = styled("p", {
+const TableOfContentsLink = styled("span", {
   // ml: "1rem",
   "&:hover": {
     color: "$slate12",

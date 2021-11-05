@@ -1,11 +1,9 @@
 import Page from "components/PageLayout";
-import { getAllBlogposts, getTagPathsFromBlogposts } from "lib/blogposts";
-import type { Blogpost } from "lib/blogposts";
-import { styled } from "styles";
-import { Stack } from "components/shared";
+import PageHeader from "components/PageHeader";
 import Blogposts from "components/Blogposts";
+import type { Blogpost } from "lib/blogposts";
+import { getAllBlogposts, getTagPathsFromBlogposts } from "lib/blogposts";
 import { handleTag } from "utils";
-
 interface TagPageProps {
   blogposts: Array<Blogpost>;
   tag: string;
@@ -14,14 +12,12 @@ interface TagPageProps {
 function TagPage({ blogposts, tag }: TagPageProps) {
   return (
     <Page title={`${tag} Posts`}>
-      <Stack type="column" gap={1} css={{ py: "$2" }}>
-        <Stack type="column" gap={1} css={{ py: "$4" }}>
-          <h1>{tag}</h1>
-          <p>Blogposts related to {tag}.</p>
-        </Stack>
+      <PageHeader>
+        <h1>{tag}</h1>
+        <p>Blogposts related to {tag}.</p>
+      </PageHeader>
 
-        <Blogposts blogposts={blogposts} />
-      </Stack>
+      <Blogposts blogposts={blogposts} />
     </Page>
   );
 }

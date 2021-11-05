@@ -1,11 +1,15 @@
 import { styled } from "styles";
 import { Stack } from "components/shared";
 
-function Header({ frontmatter }: { frontmatter: any }) {
+function Header({ frontmatter, hits }: { frontmatter: any; hits: number }) {
   return (
     <Wrapper type="column" gap={1}>
-      <Date>{frontmatter.date}</Date>
+      <Stack type="row" gap={1}>
+        <Date>{frontmatter.date}</Date>/<Date>{hits} views</Date>
+      </Stack>
+
       <Headline>{frontmatter.headline}</Headline>
+
       <Description>{frontmatter.description}</Description>
     </Wrapper>
   );
@@ -14,16 +18,17 @@ function Header({ frontmatter }: { frontmatter: any }) {
 export default Header;
 
 const Wrapper = styled(Stack, {
-  // margin: "1.5rem auto",
-  // width: "90%",
-  justifyContent: "center",
   pb: "2rem",
   borderBottom: "1px solid $gray10",
+
+  "@bp1": {
+    borderBottom: "none",
+  },
 });
 
 const Headline = styled("h1", {
   textAlign: "left",
-  fontSize: "clamp($4, 5vw, $6)",
+  fontSize: "clamp($5, 5vw, $6)",
 });
 
 const Description = styled("p", {

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import CodeBlock from "./CodeBlock";
+import Skeletal from "./Skeletal";
 import { slugify } from "utils";
 
 function HeaderOne({ children }: { children: string }) {
@@ -35,5 +36,6 @@ export default {
   h2: HeaderTwo,
   code: CodeBlock,
   a: CustomLink,
+  Skeletal,
   Image,
 };

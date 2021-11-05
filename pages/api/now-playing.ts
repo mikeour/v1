@@ -23,7 +23,8 @@ export default async (_: NextApiRequest, res: NextApiResponse) => {
     artist: item.artists.map((artist) => artist.name).join(", "),
     // @ts-ignore
     album: item.album.name,
-    songUrl: item.external_urls.spotify,
+    // @ts-ignore
+    songUrl: item.preview_url,
     title: item.name,
     // @ts-ignore
     albumImageUrl: item.album.images[0].url,

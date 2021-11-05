@@ -1,58 +1,59 @@
 import Page from "components/PageLayout";
-import { styled } from "styles";
+import PageHeader from "components/PageHeader";
 import MovieTrack from "components/MovieTrack";
 import SkeletonMovieTrack from "components/MovieTrack.skeleton";
 import { Stack } from "components/shared";
-import useRecentlyWatched from "hooks/useRecentlyWatched";
 import { Letterboxd } from "components/icons";
+import useRecentlyWatched from "hooks/useRecentlyWatched";
+import { getPlaceholderItems } from "utils";
+import { styled } from "styles";
 
-const skeletonFilms = Array.from({ length: 20 }).map((_, idx) => idx);
+const skeletonFilms = getPlaceholderItems(20);
 
 function MoviePage() {
   const { data, isLoading } = useRecentlyWatched();
 
+  const films = data?.films ?? [];
+
   return (
     <Page title="Movies">
-      <Stack type="column" gap={1} css={{ py: "$2" }}>
-        <Stack type="column" gap={1} css={{ py: "$4" }}>
-          <Stack type="row" gap={2} css={{ alignItems: "baseline" }}>
-            <h1>Movies</h1>
-            <Stack
-              type="row"
-              gap={1}
-              css={{
-                span: { color: "$slate10" },
-              }}
-            >
-              <span>via Letterboxd</span>
-              <IconContainer>
-                <Letterboxd />
-              </IconContainer>
-            </Stack>
+      <PageHeader>
+        <Stack type="row" gap={2} css={{ alignItems: "baseline" }}>
+          <h1>Movies</h1>
+          <Stack
+            type="row"
+            gap={1}
+            css={{
+              span: { color: "$slate10" },
+            }}
+          >
+            <span>via Letterboxd</span>
+            <IconContainer>
+              <Letterboxd />
+            </IconContainer>
           </Stack>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi
-            aspernatur adipisci iusto dicta esse perferendis id, ipsa itaque
-            rerum nemo, numquam veniam, quam distinctio amet qui! Repellendus
-            quibusdam voluptatum expedita?
-          </p>
         </Stack>
-      </Stack>
+        <p>
+          Movies are one of my favorite ways to unwind. Recently I've started
+          keeping track of the movies I've watched and started saving some of my
+          favorite quotes from them.
+        </p>
+        <p>Any recommendations? Let me know. I'm always open to new films.</p>
+      </PageHeader>
 
       <Content type="column" gap={1}>
         {isLoading
           ? skeletonFilms.map((id) => <SkeletonMovieTrack key={id} />)
-          : data &&
-            data.films.map((film) => {
+          : films.map((film) => {
               return (
-                <ExternalLink
-                  key={film.id}
-                  href={film.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <MovieTrack film={film} />
-                </ExternalLink>
+                // <ExternalLink
+                //   key={film.id}
+                //   href={film.url}
+                //   target="_blank"
+                //   rel="noopener noreferrer"
+                // >
+                <MovieTrack key={film.id} film={film} />
+                // </ExternalLink>
               );
             })}
       </Content>

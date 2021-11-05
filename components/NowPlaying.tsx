@@ -1,16 +1,16 @@
 import Link from "next/link";
 import Image from "next/image";
 import { AnimatePresence } from "framer-motion";
-import { styled } from "styles";
-import NowPlayingSkeleton from "components/NowPlaying.skeleton";
-import useNowPlaying from "hooks/useNowPlaying";
-import { Spotify, NowPlayingIcon } from "components/icons";
 import { Stack, IconContainer, AlbumArt } from "components/shared";
+import NowPlayingSkeleton from "components/NowPlaying.skeleton";
+import { Spotify, NowPlayingIcon } from "components/icons";
+import useNowPlaying from "hooks/useNowPlaying";
+import { styled } from "styles";
 
 function NowPlaying() {
-  const { track, loading } = useNowPlaying();
+  const { nowPlayingTrack, isLoading } = useNowPlaying();
 
-  if (loading || track === null) {
+  if (isLoading || nowPlayingTrack === null) {
     return <NowPlayingSkeleton />;
   }
 
@@ -21,7 +21,7 @@ function NowPlaying() {
           <Stack
             type="row"
             gap={2}
-            key={track?.title ?? "now-playing"}
+            key={nowPlayingTrack?.title ?? "now-playing"}
             initial={{ opacity: 0, x: 5 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -5 }}
@@ -29,18 +29,18 @@ function NowPlaying() {
           >
             <AlbumArt>
               <Image
-                src={track.albumImageUrl}
-                alt={`${track.artist} album art`}
+                src={nowPlayingTrack.albumImageUrl}
+                alt={`${nowPlayingTrack.artist} album art`}
                 layout="fill"
               />
             </AlbumArt>
 
             <Stack type="column" gap={0}>
-              <TrackName>{track.title}</TrackName>
-              <ArtistName>{track.artist}</ArtistName>
+              <TrackName>{nowPlayingTrack.title}</TrackName>
+              <ArtistName>{nowPlayingTrack.artist}</ArtistName>
             </Stack>
             <IconContainer css={{ size: "18px", color: "$mediaGreen" }}>
-              {track?.isPlaying ? <NowPlayingIcon /> : <Spotify />}
+              {nowPlayingTrack?.isPlaying ? <NowPlayingIcon /> : <Spotify />}
             </IconContainer>
           </Stack>
         </AnimatePresence>

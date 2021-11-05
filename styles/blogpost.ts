@@ -10,6 +10,16 @@ export default css({
     ml: "$2",
   },
 
+  h2: {
+    fontSize: "clamp($4, 5vw, $5)",
+    mt: "$3",
+  },
+
+  h3: {
+    fontSize: "clamp($3, 5vw, $4)",
+    mt: "$3",
+  },
+
   "code:not([class])": {
     textAlign: "left",
     whiteSpace: "pre",

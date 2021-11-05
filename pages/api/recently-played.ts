@@ -15,7 +15,7 @@ export default async (_: NextApiRequest, res: NextApiResponse) => {
       artist: track.artists.map((artist) => artist.name).join(", "),
       // @ts-ignore
       album: track.album.name,
-      songUrl: track.external_urls.spotify,
+      songUrl: track.preview_url,
       title: track.name,
       // @ts-ignore
       albumImageUrl: track.album.images[0].url,
@@ -32,9 +32,3 @@ export default async (_: NextApiRequest, res: NextApiResponse) => {
     recentTracks,
   });
 };
-
-// refresh SPOTIFY_REFRESH_TOKEN=AQDoRFtlYP4S0-W65f7eg53kCAzSOu3FxMwtsly1_OPsXRVvEUxF72Bci_e5BeWgr4uCmTzbmg2rosfmUI7fHLd4gBCgK5NrH8Q-SEKk7UsETVsMYECW-tUPgyGscAIrNMY
-
-// url to get code https://accounts.spotify.com/authorize?response_type=code&client_id=9b52f7176f3248cd928a38dfd460af28&scope=user-read-currently-playing&user-top-read&user-read-recently-played&redirect_uri=http%3A%2F%2Flocalhost:3000
-
-// round 2 https://accounts.spotify.com/authorize?response_type=code&client_id=9b52f7176f3248cd928a38dfd460af28&scope=user-read-currently-playing%20user-top-read%20user-read-recently-played&redirect_uri=http%3A%2F%2Flocalhost:3000

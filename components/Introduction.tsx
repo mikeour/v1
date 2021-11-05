@@ -1,13 +1,7 @@
-import { Stack } from "components/shared";
-import Blogposts from "components/Blogposts";
+import { Stack, Link } from "components/shared";
 import { styled } from "styles";
-import type { Blogpost } from "lib/blogposts";
 
-interface IntroductionProps {
-  blogposts: Array<Blogpost>;
-}
-
-function Introduction({ blogposts }: IntroductionProps) {
+function Introduction() {
   return (
     <Stack
       type="column"
@@ -15,7 +9,6 @@ function Introduction({ blogposts }: IntroductionProps) {
       css={{
         justifyContent: "center",
         gridAutoRows: "auto",
-        // padding: "0 1rem",
       }}
     >
       <Stack type="column" gap={1} css={{ gtc: "1fr", py: "$4" }}>
@@ -24,14 +17,23 @@ function Introduction({ blogposts }: IntroductionProps) {
           <HeadlineEmphasized>Michael Roeslein</HeadlineEmphasized>
         </Headline>
         <p>I’m a design-focused web developer living in Brooklyn, NY.</p>
-        {/* <p>
-          I love listening to music, long walks on the beach, and contributing
-          to open source. It doesnt' matter what time of day — if there is an
-          opportunity to become a better software engineer I will pursue it.
-        </p> */}
+        <p>
+          Whether it's sharing what{" "}
+          <Link href="/music" bold>
+            I'm listening to
+          </Link>
+          , what{" "}
+          <Link href="/movies" bold>
+            I'm watching
+          </Link>
+          , or writing about{" "}
+          <Link href="/blog" bold>
+            web development —{" "}
+          </Link>
+          I'm excited to have this little corner of the web to talk about all
+          the things I love.
+        </p>
       </Stack>
-
-      <Blogposts blogposts={blogposts} />
     </Stack>
   );
 }
@@ -39,7 +41,7 @@ function Introduction({ blogposts }: IntroductionProps) {
 export default Introduction;
 
 const Headline = styled("p", {
-  fontSize: "clamp(2.5rem, 7vw, 5.5rem)",
+  fontSize: "clamp(3.1rem, 7vw, 5.5rem)",
   fontWeight: "bold",
   letterSpacing: "-1px",
   lineHeight: "1",
@@ -50,8 +52,6 @@ const HeadlineEmphasized = styled("span", {
   color: "$indigo8",
   display: "inline-block",
   "@supports (-webkit-background-clip: text) or (background-clip: text)": {
-    // background:
-    //   "linear-gradient(90deg, #1f005c, #5b0060, #870160, #ac255e, #ca485c, #e16b5c, #f39060, #ffb56b)",
     background:
       "linear-gradient(to right, $indigo8, $indigo11, $indigo9, $indigo11, $indigo8)",
     backgroundClip: "text",

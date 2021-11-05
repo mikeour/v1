@@ -1,5 +1,6 @@
 import Page from "components/PageLayout";
 import Introduction from "components/Introduction";
+import Blogposts from "components/Blogposts";
 import { getAllBlogposts } from "lib/blogposts";
 import type { Blogpost } from "lib/blogposts";
 
@@ -10,7 +11,8 @@ interface HomeProps {
 export default function Home({ blogposts }: HomeProps) {
   return (
     <Page>
-      <Introduction blogposts={blogposts} />
+      <Introduction />
+      <Blogposts blogposts={blogposts} isFeatured />
     </Page>
   );
 }
