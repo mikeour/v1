@@ -13,7 +13,7 @@ const defaultTrack = {
 };
 
 interface Track {
-  image: StaticImageData;
+  image: any;
   title: string;
   artist: string;
   isPlaying: boolean;
