@@ -18,7 +18,7 @@ function App({ Component, pageProps }: AppProps) {
     <ThemeProvider
       attribute="class"
       value={{ light: "light-theme", dark: darkTheme.toString() }}
-      defaultTheme="light"
+      defaultTheme="dark"
       enableColorScheme={false}
       enableSystem={false}
     >
