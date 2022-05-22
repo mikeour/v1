@@ -32,9 +32,9 @@ export const { styled, getCssString, theme, global, keyframes, css } =
         "dreamy-gradients-green": `linear-gradient(180deg, #00FF85 0%, rgba(0, 255, 71, 0) 100%);`,
       },
       sizes: {
-        header: "1100px",
-        content: "950px",
-        footer: "1100px",
+        header: "900px",
+        content: "900px",
+        footer: "900px",
       },
       space: {
         0: "0rem",
