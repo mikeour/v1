@@ -1,11 +1,11 @@
 import { styled } from "styles";
 import { Stack } from "components/shared";
 
-function Header({ frontmatter, hits }: { frontmatter: any; hits: number }) {
+function Header({ frontmatter }: { frontmatter: any }) {
   return (
     <Wrapper type="column" gap={1}>
       <Stack type="row" gap={1}>
-        <Date>{frontmatter.date}</Date>/<Date>{hits} views</Date>
+        <Date>{frontmatter.date}</Date>
       </Stack>
 
       <Headline>{frontmatter.headline}</Headline>
