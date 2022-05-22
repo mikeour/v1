@@ -2,8 +2,11 @@ import Image from "next/image";
 import { styled } from "styles";
 import timeAgo from "lib/timeago";
 import { Film } from "types";
+interface MovieTrackProps {
+  film: Film;
+}
 
-function MovieTrack({ film }: { film: Film }) {
+function MovieTrack({ film }: MovieTrackProps) {
   return (
     <MovieTrackContainer key={film.id}>
       <MoviePoster>

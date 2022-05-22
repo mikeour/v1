@@ -1,15 +1,18 @@
-import letterboxd from "letterboxd";
 import Page from "components/PageLayout";
 import MovieTrack from "components/MovieTrack";
-import { transformFilm } from "utils";
+import { getFilms } from "lib/letterboxd";
 import { styled } from "styles";
-import { LetterboxdFilm } from "types";
+import { Film } from "types";
 
-function MoviePage({ films }: any) {
+interface MoviePageProps {
+  films: Array<Film>;
+}
+
+function MoviePage({ films }: MoviePageProps) {
   return (
     <Page title="Movies">
       <Content>
-        {films.map((film: any) => {
+        {films.map((film) => {
           return <MovieTrack key={film.id} film={film} />;
         })}
       </Content>
@@ -20,11 +23,7 @@ function MoviePage({ films }: any) {
 export default MoviePage;
 
 export async function getStaticProps() {
-  const response = await letterboxd("mikeour");
-
-  const films = response
-    .filter((film: LetterboxdFilm) => film.type === "diary")
-    .map(transformFilm);
+  const films = await getFilms();
 
   return {
     props: {

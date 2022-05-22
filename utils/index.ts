@@ -1,4 +1,4 @@
-import { LetterboxdFilm } from "types";
+import { LetterboxdFilm, Film } from "types";
 
 export function slugify(text: string) {
   return text
@@ -64,7 +64,7 @@ export function calculateTime(secs: number | null) {
   return `${minutes}:${returnedSeconds}`;
 }
 
-export function transformFilm(film: LetterboxdFilm) {
+export function transformFilm(film: LetterboxdFilm): Film {
   return {
     id: `${film.film.title}-${film.date.watched}`,
     watched: getFormattedDate(film.date.watched),

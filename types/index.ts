@@ -11,12 +11,12 @@ export interface TrackData {
 }
 
 export interface Film {
-  id: number;
+  id: string;
   watched: string;
   title: string;
   year: string;
   poster: string;
-  rating: number;
+  rating: string;
   review: string;
   url: string;
 }
