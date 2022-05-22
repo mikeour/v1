@@ -14,7 +14,6 @@
     "@next/mdx": "^11.1.2",
     "@radix-ui/colors": "^0.1.7",
     "@stitches/react": "0.2.3",
-    "@supabase/supabase-js": "^1.23.0",
     "framer-motion": "^4.1.17",
     "gray-matter": "^4.0.2",
     "javascript-time-ago": "^2.3.9",
