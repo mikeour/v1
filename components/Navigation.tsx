@@ -1,24 +1,10 @@
 import NextLink from "next/link";
-import { useRouter } from "next/router";
-import { styled } from "styles";
-import { useQuery } from "react-query";
-import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
+import { motion } from "framer-motion";
 import { Stack } from "components/shared";
 import DarkModeToggle from "components/DarkModeToggle";
-
-const links = [
-  {
-    id: 1,
-    route: "/blog",
-    display: "Blog",
-  },
-  { id: 2, route: "/about", display: "About" },
-];
+import { styled } from "styles";
 
 function Navigation() {
-  const router = useRouter();
-  const path = router.pathname;
-
   return (
     <NavigationWrapper>
       <NavigationContainer>
@@ -28,11 +14,6 @@ function Navigation() {
               <Logo />
             </LogoContainer>
           </NextLink>
-          {/* {links.map((link) => (
-            <Link key={link.id} href={link.route}>
-              <LinkText tabIndex={0}>{link.display}</LinkText>
-            </Link>
-          ))} */}
         </Stack>
 
         <DarkModeToggle />
@@ -64,12 +45,13 @@ const NavigationWrapper = styled("nav", {
   width: "100%",
   gridArea: "nav",
   display: "grid",
+
   placeContent: "center",
   gtc: "minmax(0, 1fr)",
 });
 
 const NavigationContainer = styled("div", {
-  p: "1.25rem",
+  py: "1.25rem",
   margin: "0 auto",
   width: "100%",
   // Magic number to prevent layout shift when dark mode toggle is first painted to screen
@@ -78,35 +60,11 @@ const NavigationContainer = styled("div", {
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
+  px: "$3",
 });
 
 const LogoContainer = styled("div", {
   display: "grid",
   placeItems: "center",
   cursor: "pointer",
-});
-
-const Link = styled(NextLink, {
-  display: "grid",
-  gridAutoFlow: "row",
-  position: "relative",
-});
-
-const LinkText = styled("span", {
-  display: "grid",
-  color: "$slate11",
-  cursor: "pointer",
-  background: "none",
-  fontSize: "$3",
-  transform: "translateY(2.2px)",
-  br: "8px",
-  "&:hover": { color: "$slate12" },
-  "&:focus": {
-    outline: "3px solid $colors$slate8",
-    outlineOffset: "5px",
-    color: "$slate12",
-  },
-
-  "@initial": { display: "grid" },
-  "@bp1": { display: "none" },
 });
