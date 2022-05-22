@@ -1,91 +1,60 @@
 import Image from "next/image";
 import { styled } from "styles";
 import timeAgo from "lib/timeago";
-import { Stack, glisten } from "components/shared";
-import { ExternalLink } from "components/icons";
 import { Film } from "types";
 
 function MovieTrack({ film }: { film: Film }) {
   return (
-    <MovieTrackContainer key={film.id} type="row" gap={1}>
+    <MovieTrackContainer key={film.id}>
       <MoviePoster>
         <Image src={film.poster} alt={`${film.title} poster`} layout="fill" />
       </MoviePoster>
+      <MovieDetails>
+        <MovieTitleContainer>
+          <MovieTitle>{film.title}</MovieTitle>
+          <MovieYear>{film.year}</MovieYear>
+        </MovieTitleContainer>
 
-      <MovieInformation type="column" gap={2}>
-        <MovieDetails
-          type="row"
-          gap={2}
-          css={{ "@bp1": { gridAutoFlow: "row !important" } }}
-        >
-          <Stack
-            type="column"
-            gap={1}
-            css={{ "@bp1": { gridAutoFlow: "row !important" } }}
-          >
-            <Stack
-              type="row"
-              gap={2}
-              css={{
-                alignItems: "baseline",
-                "@bp1": { gridAutoFlow: "row", gridGap: "$1" },
-              }}
-            >
-              <MovieTitle>{film.title}</MovieTitle>
-              {/* <p>•</p> */}
-              <MovieYear>{film.year}</MovieYear>
-            </Stack>
-          </Stack>
+        <MovieInfoContainer>
+          <MovieRating>{film.rating}</MovieRating>
+          <MovieWatched>{timeAgo.format(new Date(film.watched))}</MovieWatched>
+        </MovieInfoContainer>
+      </MovieDetails>
 
-          <Stack type="row" gap={2}>
-            <MovieRating>{film.rating}</MovieRating>
-            {/* <p>•</p> */}
-            <MovieWatched>
-              {timeAgo.format(new Date(film.watched))}
-            </MovieWatched>
-          </Stack>
-
-          {/* <ExternalIconContainer>
-            <ExternalLink />
-          </ExternalIconContainer> */}
-        </MovieDetails>
-
-        <MovieReview>{film.review}</MovieReview>
-      </MovieInformation>
+      <MovieReview>{film.review}</MovieReview>
     </MovieTrackContainer>
   );
 }
 
 export default MovieTrack;
 
-export const MovieTrackContainer = styled(Stack, {
-  gtc: "auto minmax(0, 1fr)",
-  p: "$1",
+export const MovieTrackContainer = styled("div", {
+  p: "$2",
   br: "8px",
   bg: "none",
 
-  // borderTop: "3px solid $slate5",
   transition: "background 300ms ease-in-out",
-  // cursor: "pointer",
+  boxSizing: "content-box",
+  width: "100%",
+  alignSelf: "center",
 
   "&:hover": {
     bg: "$slate5",
   },
-
-  "@bp1": {
-    // gtc: "minmax(0, 1fr)",
-  },
 });
 
 export const MoviePoster = styled("div", {
-  $$posterSize: "clamp(115px, 25vw, 125px)",
+  $$posterSize: "clamp(140px, 25vw, 155px)",
 
   display: "flex",
   justifyContent: "center",
+  float: "left",
+  flexShrink: 0,
   alignItems: "center",
-  width: "calc($$posterSize * (2/3))",
+  aspectRatio: "2/3",
   height: "$$posterSize",
   br: "5px",
+  mr: "$2",
   overflow: "hidden",
   position: "relative",
 
@@ -93,50 +62,33 @@ export const MoviePoster = styled("div", {
     size: "100%",
     objectFit: "cover",
   },
-
-  variants: {
-    skeleton: {
-      true: {
-        bg: "$slate7",
-
-        "&::after": {
-          position: "absolute",
-          content: "",
-          inset: 0,
-          linearGradient:
-            "90deg, transparent, rgba(0, 0, 0, 0.09), transparent",
-          transform: "translateX(-100%)",
-          animation: `${glisten} 1.6s linear 0.5s infinite`,
-        },
-      },
-    },
-  },
 });
 
-export const MovieInformation = styled(Stack, {
-  gtc: "minmax(0, 1fr)",
-  gtr: "auto 1fr auto",
-  alignSelf: "center",
-  justifySelf: "stretch",
-  p: "$1",
-  "@bp1": {
-    gtr: "minmax(0, 1fr)",
-  },
-});
+export const MovieInformation = styled("div", {});
+
+const MovieTitleContainer = styled("div", {});
 
 const MovieTitle = styled("span", {
   color: "$indigo12",
-  fontSize: "$3",
+  fontSize: "clamp($3, 3vw, $4)",
+  fontWeight: "bold",
+  letterSpacing: "-0.025em",
 });
 
 const MovieYear = styled("span", {
   fontSize: "$2",
-  // fontStyle: "italic",
-  color: "$gray10",
+  color: "$gray11",
+  ml: "0.5rem",
+});
+
+const MovieInfoContainer = styled("div", {
+  display: "flex",
+  alignItems: "baseline",
+  gap: "0.5rem",
 });
 
 const MovieRating = styled("span", {
-  fontSize: "$1",
+  fontSize: "$2",
   color: "$indigo10",
 });
 
@@ -144,16 +96,9 @@ const MovieWatched = styled("span", {
   fontSize: "$2",
   color: "$gray11",
   lineHeight: 1,
-  // fontStyle: "italic",
-  textAlign: "right",
-
-  // "@bp1": {
-  //   textAlign: "left",
-  // },
 });
 
 const MovieReview = styled("span", {
-  // fontStyle: "italic",
   fontSize: "$2",
   lineHeight: 1.5,
   color: "$slate11",
@@ -164,36 +109,17 @@ const MovieReview = styled("span", {
   // WebkitLineClamp: "4",
   // overflow: "hidden",
   // px: "$1",
-  // py: "$1",
-  // borderLeft: "3px solid $indigo6",
-
-  "@bp1": {
-    display: "none",
-  },
+  // borderLeft: "3px solid $indigo11",
 });
 
-const ExternalIconContainer = styled("div", {
-  size: 18,
-  color: "$indigo9",
+export const MovieDetails = styled("div", {
   display: "flex",
-  justiftyContent: "center",
-  alignItems: "center",
-
-  svg: {
-    size: "100%",
-  },
-
-  "@bp1": {
-    alignSelf: "flex-start",
-  },
-});
-
-export const MovieDetails = styled(Stack, {
-  alignItems: "baseline",
+  flexDirection: "row",
   justifyContent: "space-between",
+  flexWrap: "wrap",
+  mb: "0.5rem",
 
   "@bp1": {
-    alignSelf: "stretch",
-    alignItems: "center",
+    flexDirection: "column",
   },
 });
