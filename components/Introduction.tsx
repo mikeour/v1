@@ -26,11 +26,11 @@ function Introduction() {
           <Link href="/movies" bold>
             I'm watching
           </Link>
-          , or writing about{" "}
+          , or{" "}
           <Link href="/blog" bold>
-            web development —{" "}
+            writing about web development{" "}
           </Link>
-          I'm excited to have this little corner of the web to talk about all
+          — I'm excited to have this little corner of the web to talk about all
           the things I love.
         </p>
       </Stack>
