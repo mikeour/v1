@@ -66,6 +66,10 @@ export const MusicTrackContainer = styled(Stack, {
   background: "none",
   transition: "background 300ms ease",
   cursor: "pointer",
+  boxSizing: "content-box",
+  width: "100%",
+  alignSelf: "center",
+  justifySelf: "center",
 
   ".play": {
     opacity: 0,
