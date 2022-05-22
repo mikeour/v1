@@ -10,13 +10,15 @@ export default class Document extends NextDocument {
       <Html lang="en">
         <Head>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
+
           <link
             rel="preconnect"
             href="https://fonts.gstatic.com"
             crossOrigin="true"
           />
+
           <link
-            href="https://fonts.googleapis.com/css2?family=Karla&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Karla:wght@400;600&display=swap"
             rel="stylesheet"
           />
 
@@ -24,10 +26,12 @@ export default class Document extends NextDocument {
             href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap"
             rel="stylesheet"
           />
+
           <style
             id="stitches"
             dangerouslySetInnerHTML={{ __html: getCssString() }}
           />
+
           <link rel="icon" type="image/png" href={`${this.faviconSrc}?v=2`} />
         </Head>
         <body>
