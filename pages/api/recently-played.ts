@@ -13,11 +13,9 @@ export default async (_: NextApiRequest, res: NextApiResponse) => {
     return {
       id: new Date(played_at).getTime(),
       artist: track.artists.map((artist) => artist.name).join(", "),
-      // @ts-ignore
       album: track.album.name,
       songUrl: track.preview_url,
       title: track.name,
-      // @ts-ignore
       albumImageUrl: track.album.images[0].url,
       playedAt: played_at,
       isPlaying: false,

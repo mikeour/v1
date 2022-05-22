@@ -16,13 +16,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const topTracks = [...data.items].slice(0, 20).map((item) => {
     return {
-      // id: new Date(played_at).getTime(),
       artist: item.artists.map((artist) => artist.name).join(", "),
       album: item.album.name,
       songUrl: item.preview_url,
       title: item.name,
       albumImageUrl: item.album.images[0].url,
-      // playedAt: played_at,
       isPlaying: false,
       popularity: item.popularity,
       duration: millisToMinutesAndSeconds(item.duration_ms),

@@ -521,10 +521,10 @@
   resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.2.tgz#1a62f89525723dde24ba1b01b092bf5df8ad4d39"
   integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
 
-"@types/spotify-api@^0.0.11":
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/@types/spotify-api/-/spotify-api-0.0.11.tgz#5cc45ad6341b5233f4617601dc4826b9e6370473"
-  integrity sha512-ZSEpG22JPMcN+tR0+U3wvmGHF4L+jyh1N+8aFbT6WzdXwPuTgH2iL+wKASkMN79CEntHQTPgBwpywZVDhll0Eg==
+"@types/spotify-api@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/@types/spotify-api/-/spotify-api-0.0.16.tgz#4f509ab1883af6d20cd79d518df11d08232009bb"
+  integrity sha512-5tzZ8cJe2Wv5zjhBLXi7gJObp/kzuG10FwMKPqNtmG9HFWlXKvqBhd0Z+T5Oa0yhkSX1u8Y+bBUhUEPmZpGpDQ==
 
 "@types/unist@*", "@types/unist@^2.0.0", "@types/unist@^2.0.2", "@types/unist@^2.0.3":
   version "2.0.6"
