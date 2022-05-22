@@ -1,5 +1,3 @@
-import querystring from "querystring";
-
 const {
   SPOTIFY_CLIENT_ID: client_id,
   SPOTIFY_CLIENT_SECRET: client_secret,
@@ -13,16 +11,18 @@ const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
 const RECENTLY_PLAYED_ENDPOINT = `https://api.spotify.com/v1/me/player/recently-played?limit=50`;
 
 const getAccessToken = async () => {
+  const body = new URLSearchParams({
+    grant_type: "refresh_token",
+    refresh_token: refresh_token!,
+  });
+
   const response = await fetch(TOKEN_ENDPOINT, {
     method: "POST",
     headers: {
       Authorization: `Basic ${basic}`,
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: querystring.stringify({
-      grant_type: "refresh_token",
-      refresh_token,
-    }),
+    body: body.toString(),
   });
 
   return response.json();
