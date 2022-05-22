@@ -1,3 +1,5 @@
+import { LetterboxdFilm } from "types";
+
 export function slugify(text: string) {
   return text
     .toString()
@@ -52,4 +54,25 @@ export function millisToMinutesAndSeconds(millis: number) {
 
 export function getPlaceholderItems(amount: number) {
   return Array.from({ length: amount }).map((_, index) => index);
+}
+
+export function calculateTime(secs: number | null) {
+  if (secs === null) return `0:00`;
+  const minutes = Math.floor(secs / 60);
+  const seconds = Math.floor(secs % 60);
+  const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+  return `${minutes}:${returnedSeconds}`;
+}
+
+export function transformFilm(film: LetterboxdFilm) {
+  return {
+    id: `${film.film.title}-${film.date.watched}`,
+    watched: getFormattedDate(film.date.watched),
+    title: film.film.title,
+    year: film.film.year,
+    poster: film.film.image.large,
+    rating: film.rating.text,
+    review: film.review,
+    url: film.uri,
+  };
 }
