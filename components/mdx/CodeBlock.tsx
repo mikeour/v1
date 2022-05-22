@@ -10,12 +10,13 @@ export default function CodeBlock({ className = "", children }: any) {
     <SyntaxHighlighter
       style={syntaxStyle}
       language={language}
-      children={formattedChildren}
       customStyle={{
         padding: "1rem",
         borderRadius: "8px",
         fontSize: "clamp(0.9rem, 1.75vw, 0.9rem)",
       }}
-    />
+    >
+      {formattedChildren}
+    </SyntaxHighlighter>
   );
 }
