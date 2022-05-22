@@ -12,16 +12,16 @@ import { getHeadings, handleTag } from "utils";
 import { styled } from "styles";
 import blogpostStyles from "styles/blogpost";
 
-export default function Blogpost({ blogpost, slug, hits }: any) {
+export default function Blogpost({ blogpost, slug }: any) {
   const { mdxSource, frontmatter, links, content } = blogpost;
   const headings = getHeadings(content);
 
-  useRegisterBlogHit(slug);
+  // useRegisterBlogHit(slug);
 
   return (
     <Page title={`${frontmatter.headline}`}>
       <BlogLayout>
-        <BlogHeader frontmatter={frontmatter} hits={hits} />
+        <BlogHeader frontmatter={frontmatter} />
         <ContentContainer>
           <Content className={blogpostStyles()}>
             <MDXRemote {...mdxSource} components={components} />
@@ -119,10 +119,10 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: any) {
   const blogpost = await getBlogpostBySlug(params.slug);
-  const hits = await getHitsBySlug(params.slug);
+  // const hits = await getHitsBySlug(params.slug);
 
   return {
-    props: { blogpost, slug: params.slug, hits },
+    props: { blogpost, slug: params.slug },
     revalidate: 10,
   };
 }
