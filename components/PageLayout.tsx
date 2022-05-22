@@ -31,11 +31,9 @@ export default function PageLayout({
 }
 
 const Wrapper = styled("div", {
-  display: "grid",
-  gridTemplateAreas: '"nav nav nav" ". content ." "foot foot foot"',
-  gtr: "auto 1fr auto",
-  gtc: "auto 1fr auto",
-  gridGap: "$4 1.25rem",
+  display: "flex",
+  flexDirection: "column",
+  gap: "$4 1.25rem",
   alignItems: "center",
   justifyContent: "center",
   width: "100%",
@@ -44,12 +42,11 @@ const Wrapper = styled("div", {
 });
 
 const Content = styled("main", {
-  gridArea: "content",
   size: "100%",
   color: "$gray12",
-  display: "grid",
-  justifySelf: "center",
-  alignContent: "center",
+  px: "$3",
   maxWidth: "$content",
-  pb: "$4",
+  display: "flex",
+  flexDirection: "column",
+  flexGrow: 1,
 });
