@@ -1,14 +1,7 @@
-import { styled } from "styles";
-import NowPlaying from "components/NowPlaying";
-import { IconContainer, Stack } from "components/shared";
-import {
-  Github,
-  Twitter,
-  LinkedIn,
-  Mail,
-  ExternalLink,
-} from "components/icons";
 import NextLink from "next/link";
+import { IconContainer } from "components/shared";
+import { Github, Twitter, LinkedIn } from "components/icons";
+import { styled } from "styles";
 
 const links = [
   {
@@ -18,68 +11,60 @@ const links = [
   },
   { id: 2, route: "/blog", display: "Blog" },
   { id: 3, route: "/about", display: "About" },
-  { id: 4, route: "/contact", display: "Contact" },
-];
-
-const additionalLinks = [
-  { id: 1, route: "/music", display: "Music" },
-  { id: 2, route: "/movies", display: "Movies" },
+  { id: 4, route: "/music", display: "Music" },
+  { id: 5, route: "/movies", display: "Movies" },
 ];
 
 const externalLinks = [
-  { id: 1, name: "Github", url: "https://www.github.com/mikeour" },
-  { id: 2, name: "Twitter", url: "https://www.twitter.com/mikeour" },
+  {
+    id: 1,
+    name: "Github",
+    url: "https://www.github.com/mikeour",
+    Icon: Github,
+  },
+  {
+    id: 2,
+    name: "Twitter",
+    url: "https://www.twitter.com/mikeour",
+    Icon: Twitter,
+  },
   {
     id: 3,
     name: "LinkedIn",
     url: "https://www.linkedin.co/in/michaelroeslein",
+    Icon: LinkedIn,
   },
 ];
 
 function Footer() {
   return (
     <FooterWrapper>
-      <FooterContainer type="row" gap={6}>
-        <NowPlayingContainer>
-          <NowPlaying />
-        </NowPlayingContainer>
-        <Stack type="row" gap={5}>
-          <LinksContainer type="column" gap={2}>
-            {links.map((link) => (
-              <Link key={link.id} href={link.route}>
-                <LinkText>{link.display}</LinkText>
-              </Link>
-            ))}
-          </LinksContainer>
+      <FooterContainer>
+        <LinkGrouping>
+          {links.map((link) => (
+            <Link key={link.id} href={link.route}>
+              <LinkText>{link.display}</LinkText>
+            </Link>
+          ))}
+        </LinkGrouping>
 
-          <LinksContainer type="column" gap={2}>
-            {additionalLinks.map((link) => (
-              <Link key={link.id} href={link.route}>
-                <LinkText>{link.display}</LinkText>
-              </Link>
-            ))}
-          </LinksContainer>
-          <LinksContainer type="column" gap={2}>
-            {externalLinks.map((link) => {
-              return (
-                <ExternalLinkContainer
-                  key={link.id}
-                  type="row"
-                  gap={2}
-                  as="a"
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <ExternalLinkText>{link.name}</ExternalLinkText>
-                  <ExternalIconContainer className="link-icon">
-                    <ExternalLink />
-                  </ExternalIconContainer>
-                </ExternalLinkContainer>
-              );
-            })}
-          </LinksContainer>
-        </Stack>
+        <LinkGrouping css={{ gap: "$3" }}>
+          {externalLinks.map((link) => {
+            return (
+              <ExternalLinkContainer
+                key={link.id}
+                as="a"
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ExternalIconContainer className="link-icon">
+                  <link.Icon />
+                </ExternalIconContainer>
+              </ExternalLinkContainer>
+            );
+          })}
+        </LinkGrouping>
       </FooterContainer>
     </FooterWrapper>
   );
@@ -88,39 +73,27 @@ function Footer() {
 export default Footer;
 
 const FooterWrapper = styled("footer", {
-  gridArea: "foot",
   bg: "$slate4",
   width: "100%",
-  display: "grid",
-  placeContent: "center",
-  gtc: "minmax(0, 1fr)",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
 });
 
-const FooterContainer = styled(Stack, {
+const FooterContainer = styled("div", {
   p: "$4",
-  padding: "2rem 1rem",
-  margin: "0 auto",
   width: "100%",
   maxWidth: "$footer",
-  placeContent: "center",
-  // TODO: Fix specificity of these
-  gridGap: "clamp($2, 7vw, $7) !important",
-  gridAutoFlow: "column",
-  "@initial": {
-    gridAutoFlow: "column",
-  },
-  "@bp1": { gridAutoFlow: "row !important" },
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "$3",
 });
 
-const NowPlayingContainer = styled("div", {
-  width: "300px",
-  display: "grid",
-  placeContent: "center",
-  gtc: "minmax(0, 1fr)",
-});
-
-const LinksContainer = styled(Stack, {
-  alignSelf: "flex-start",
+const LinkGrouping = styled("div", {
+  display: "flex",
+  gap: "$1",
 });
 
 const Link = styled(NextLink, {
@@ -129,21 +102,30 @@ const Link = styled(NextLink, {
   position: "relative",
 });
 
-const LinkText = styled("p", {
+const LinkText = styled("span", {
   cursor: "pointer",
   color: "$slate11",
+  fontWeight: "bold",
+  alignSelf: "center",
 
   "&:hover": { color: "$slate12" },
 });
 
-const ExternalLinkContainer = styled(Stack, {
+const ExternalLinkContainer = styled("div", {
   textDecoration: "none",
   width: "min-content",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "$1",
+  alignSelf: "center",
   cursor: "pointer",
   color: "$slate11",
+
   ".link-icon": {
     color: "$indigo9",
   },
+
   "&:hover": {
     color: "$slate12",
     ".link-icon": {
@@ -152,11 +134,7 @@ const ExternalLinkContainer = styled(Stack, {
   },
 });
 
-const ExternalLinkText = styled("p", {
-  color: "inherit",
-});
-
 const ExternalIconContainer = styled(IconContainer, {
-  size: 18,
+  size: 20,
   color: "inherit",
 });
