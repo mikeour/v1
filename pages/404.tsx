@@ -1,13 +1,22 @@
 import Page from "components/PageLayout";
-import PageHeader from "components/PageHeader";
+import { styled } from "styles";
 
 export default function Custom404() {
   return (
     <Page title="Page Not Found">
-      <PageHeader>
-        <h1>Oh no, this is unexpected</h1>
-        <p style={{ textAlign: "center" }}>Page not found</p>
-      </PageHeader>
+      <InfoContainer>
+        <h1>Oh no</h1>
+        <p>Page not found</p>
+      </InfoContainer>
     </Page>
   );
 }
+
+const InfoContainer = styled("div", {
+  height: "100%",
+  flexGrow: 1,
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+});
