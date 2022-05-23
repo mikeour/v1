@@ -1,3 +1,6 @@
+import { millisToMinutesAndSeconds } from "utils";
+import { TrackData } from "types";
+
 const {
   SPOTIFY_CLIENT_ID: client_id,
   SPOTIFY_CLIENT_SECRET: client_secret,
@@ -38,6 +41,40 @@ export async function getNowPlaying() {
   });
 }
 
+export async function getCurrentlyPlayingTrack() {
+  const response = await getNowPlaying();
+
+  if (response.status === 204 || response.status > 400) {
+    return null;
+  }
+
+  const data: SpotifyApi.CurrentlyPlayingObject = await response.json();
+
+  if (data.item === null) {
+    return null;
+  }
+
+  const { timestamp, item, is_playing } = data;
+
+  if (item.type === "track") {
+    const currentlyPlayingTrack: TrackData = {
+      id: new Date(timestamp).getTime(),
+      artist: item.artists.map((artist) => artist.name).join(", "),
+      album: item.album.name,
+      songUrl: item.preview_url,
+      title: item.name,
+      albumImageUrl: item.album.images[0].url,
+      playedAt: timestamp,
+      isPlaying: is_playing,
+      duration: millisToMinutesAndSeconds(item.duration_ms),
+    };
+
+    return currentlyPlayingTrack;
+  }
+
+  return null;
+}
+
 export async function getTopTracks(range: string) {
   const { access_token } = await getAccessToken();
 
@@ -56,4 +93,30 @@ export async function getRecentlyPlayed() {
       Authorization: `Bearer ${access_token}`,
     },
   });
+}
+
+export async function getRecentlyPlayedTracks() {
+  const response = await getRecentlyPlayed();
+  const data: SpotifyApi.UsersRecentlyPlayedTracksResponse =
+    await response.json();
+
+  const tracks = data.items.map((item) => {
+    const { track, played_at } = item;
+
+    const recentlyPlayedTrack: TrackData = {
+      id: new Date(played_at).getTime(),
+      artist: track.artists.map((artist) => artist.name).join(", "),
+      album: track.album.name,
+      songUrl: track.preview_url,
+      title: track.name,
+      albumImageUrl: track.album.images[0].url,
+      playedAt: played_at,
+      isPlaying: false,
+      duration: millisToMinutesAndSeconds(track.duration_ms),
+    };
+
+    return recentlyPlayedTrack;
+  });
+
+  return tracks;
 }
