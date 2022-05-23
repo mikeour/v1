@@ -5,24 +5,31 @@ import { NowPlayingIcon, Play, Pause } from "components/icons";
 import timeAgo from "lib/timeago";
 import { TrackData } from "types";
 
-function MusicTrack({
-  track,
-  isPlaying,
-  updateTrack,
-}: {
+interface MusicTrackProps {
   track: TrackData;
   isPlaying: boolean;
   updateTrack: (track: TrackData) => void;
-}) {
+}
+
+function MusicTrack({ track, isPlaying, updateTrack }: MusicTrackProps) {
+  // currently playing track does not contain a valid songUrl
+  // so we have to limit behavior based on it's existence
+  const hasSongUrl = track.songUrl !== null;
+
+  function handleClick() {
+    if (hasSongUrl) {
+      updateTrack(track);
+    }
+  }
+
   return (
     <MusicTrackContainer
       key={track.id}
       type="row"
       gap={2}
       playing={isPlaying}
-      onClick={() => {
-        updateTrack(track);
-      }}
+      onClick={handleClick}
+      className={`${hasSongUrl ? "valid" : ""}`}
     >
       <Stack type="row" gap={1}>
         <AlbumArt>
@@ -45,6 +52,7 @@ function MusicTrack({
       </Stack>
 
       <Album>{track.album}</Album>
+
       <Album>{track.duration}</Album>
 
       {track.isPlaying ? (
@@ -65,7 +73,6 @@ export const MusicTrackContainer = styled(Stack, {
   br: "8px",
   background: "none",
   transition: "background 300ms ease",
-  cursor: "pointer",
   boxSizing: "content-box",
   width: "100%",
   alignSelf: "center",
@@ -77,7 +84,8 @@ export const MusicTrackContainer = styled(Stack, {
     transition: "background 300ms ease, opacity 300ms ease",
   },
 
-  "&:hover": {
+  ".valid&:hover": {
+    cursor: "pointer",
     bg: "$gray5",
 
     ".play": {

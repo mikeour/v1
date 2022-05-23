@@ -5,10 +5,10 @@ import MusicTrack from "components/MusicTrack";
 import { Stack, Divider } from "components/shared";
 import { TimePlayed, Play, Pause } from "components/icons";
 import useAudioPlayer from "hooks/useAudioPlayer";
-import { calculateTime, millisToMinutesAndSeconds } from "utils";
+import { calculateTime } from "utils";
 import { styled } from "styles";
 import { TrackData } from "types";
-import { getRecentlyPlayed } from "lib/spotify";
+import { getCurrentlyPlayingTrack, getRecentlyPlayedTracks } from "lib/spotify";
 
 function MusicPage({ tracks }: any) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -27,7 +27,7 @@ function MusicPage({ tracks }: any) {
   const curPercentage = (curTime / duration) * 100;
 
   function updateTrack(track: TrackData) {
-    if (track !== selectedTrack) {
+    if (track !== selectedTrack && track.songUrl !== null) {
       setSelectedTrack(track);
       setPlaying(true);
     } else {
@@ -62,7 +62,7 @@ function MusicPage({ tracks }: any) {
 
   return (
     <Page title="Music">
-      {selectedTrack !== null && (
+      {selectedTrack !== null && selectedTrack.songUrl && (
         <AudioPlayer ref={audioRef} src={selectedTrack.songUrl} />
       )}
 
@@ -112,27 +112,15 @@ function MusicPage({ tracks }: any) {
 }
 
 export async function getServerSideProps() {
-  const response = await getRecentlyPlayed();
-  const data: SpotifyApi.UsersRecentlyPlayedTracksResponse =
-    await response.json();
+  const [currentlyPlayingTrack, recentlyPlayedTracks] = await Promise.all([
+    getCurrentlyPlayingTrack(),
+    getRecentlyPlayedTracks(),
+  ]);
 
-  const tracks = data.items.map((item) => {
-    const { track, played_at } = item;
-
-    return {
-      id: new Date(played_at).getTime(),
-      artist: track.artists.map((artist) => artist.name).join(", "),
-      // @ts-ignore
-      album: track.album.name,
-      songUrl: track.preview_url,
-      title: track.name,
-      // @ts-ignore
-      albumImageUrl: track.album.images[0].url,
-      playedAt: played_at,
-      isPlaying: false,
-      duration: millisToMinutesAndSeconds(track.duration_ms),
-    };
-  });
+  // Remove currentlyPlayingTrack if null
+  const tracks = [currentlyPlayingTrack, ...recentlyPlayedTracks].filter(
+    (track) => track !== null
+  );
 
   return {
     props: { tracks },
