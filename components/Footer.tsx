@@ -105,7 +105,6 @@ const Link = styled(NextLink, {
 const LinkText = styled("span", {
   cursor: "pointer",
   color: "$slate11",
-  fontWeight: "bold",
   alignSelf: "center",
 
   "&:hover": { color: "$slate12" },
