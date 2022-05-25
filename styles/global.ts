@@ -27,7 +27,7 @@ export default global({
 
   "p, ol, li": {
     color: "$slate11",
-    lineHeight: 1.75,
+    lineHeight: 1.55,
   },
 
   "a, a:visited": {

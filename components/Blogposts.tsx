@@ -63,8 +63,9 @@ export default Blogposts;
 const BlogpostContainer = styled(Stack, {
   borderTop: "2px solid $slate6",
   py: "$4",
-  gtc: "3fr 1fr",
+  gtc: "3fr 0.75fr",
   justifyContent: "stretch",
+
   "@bp1": {
     gridAutoFlow: "row !important",
     gtc: "1fr",
@@ -110,7 +111,7 @@ const BlogHeadline = styled("h2", {
     isFeatured: {
       true: {
         // lineHeight: 1.4,
-        fontSize: "$5",
+        fontSize: "$4",
       },
     },
   },

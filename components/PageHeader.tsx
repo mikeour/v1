@@ -14,6 +14,7 @@ function PageHeader({ children }: PageHeaderProps) {
         justifySelf: "stretch",
         justifyContent: "stretch",
         alignSelf: "center",
+        textAlign: "center",
       }}
     >
       {children}
