@@ -9,6 +9,7 @@ import { calculateTime } from "utils";
 import { styled } from "styles";
 import { TrackData } from "types";
 import { getCurrentlyPlayingTrack, getRecentlyPlayedTracks } from "lib/spotify";
+import { GetServerSidePropsContext } from "next";
 
 function MusicPage({ tracks }: any) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -111,7 +112,7 @@ function MusicPage({ tracks }: any) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ res }: GetServerSidePropsContext) {
   const [currentlyPlayingTrack, recentlyPlayedTracks] = await Promise.all([
     getCurrentlyPlayingTrack(),
     getRecentlyPlayedTracks(),
@@ -121,6 +122,9 @@ export async function getServerSideProps() {
   const tracks = [currentlyPlayingTrack, ...recentlyPlayedTracks].filter(
     (track) => track !== null
   );
+
+  // Cache the response for 60 seconds
+  res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate");
 
   return {
     props: { tracks },
