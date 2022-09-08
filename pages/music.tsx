@@ -124,7 +124,10 @@ export async function getServerSideProps({ res }: GetServerSidePropsContext) {
   );
 
   // Cache the response for 60 seconds
-  res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate");
+  res.setHeader(
+    "Cache-Control",
+    "public, maxage=0, must-revalidate, s-maxage=60, stale-while-revalidate"
+  );
 
   return {
     props: { tracks },
